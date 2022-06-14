@@ -5,6 +5,7 @@ require.config({
         bootstrap: 'vendor/bootstrap/bootstrap',
         bootstrap_css: 'vendor/bootstrap/css/bootstrap',
         css: 'vendor/require-css/css',
+        dompurify: 'vendor/dompurify/purify',
         d3: 'vendor/d3/d3',
         datatables: 'vendor/datatables/jquery.dataTables',
         datatables_css: 'vendor/datatables/jquery.dataTables',
@@ -14,6 +15,7 @@ require.config({
         font_awesome: 'vendor/font-awesome/css/font-awesome',
         highlight_css: 'vendor/highlightjs/default',
         highlight: 'vendor/highlightjs/highlight.pack',
+        htm: 'vendor/htm/htm.umd',
         jquery: 'vendor/jquery/jquery',
         'jquery-ui': 'vendor/jquery-ui/jquery-ui',
         'js-yaml': 'vendor/js-yaml/js-yaml',
@@ -35,6 +37,7 @@ require.config({
         moment: 'vendor/moment/moment',
         numeral: 'vendor/numeral/numeral',
         md5: 'vendor/spark-md5/spark-md5',
+        preact: 'vendor/preact/preact.umd',
         text: 'vendor/requirejs-text/text',
         yaml: 'vendor/requirejs-yaml/yaml',
         uuid: 'vendor/pure-uuid/uuid'
@@ -55,10 +58,10 @@ require([
     'kbaseUI/dispatcher',
     'kb_knockout/load',
     'yaml!./config.yml',
-    'bootstrap', 
+    'bootstrap',
     'css!font_awesome'
 ], (Promise, Integration, Dispatcher, knockoutLoader, pluginConfig) => {
-    'use strict';
+
     Promise.try(() => {
         const integration = new Integration({
             rootWindow: window,
@@ -92,18 +95,18 @@ require([
             })
             .then(() => {
                 // Add routes to panels here
-                
-                dispatcher = new Dispatcher({ runtime: integration.runtime, node: rootNode, views: pluginConfig.views });
+
+                dispatcher = new Dispatcher({runtime: integration.runtime, node: rootNode, views: pluginConfig.views});
                 return dispatcher.start();
             })
             .then((dispatcher) => {
-                integration.onNavigate(({ view, params }) => {
+                integration.onNavigate(({view, params}) => {
                     // TODO: ever
                     if (!view) {
-                        console.error('"view" missing', view, path, params);
+                        console.error('"view" missing', view, params);
                         throw new Error('A "view" is required for navigation');
                     }
-                    dispatcher.dispatch({ view, params });
+                    dispatcher.dispatch({view, params});
                 });
                 integration.started();
                 // TODO: more channel listeners.

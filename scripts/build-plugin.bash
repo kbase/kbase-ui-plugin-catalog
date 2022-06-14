@@ -1,3 +1,9 @@
 cd build
-yarn install && yarn clean && yarn install && yarn install-bower && yarn install-npm &&yarn remove-source-maps && yarn install-dist
+npm install && \
+npm run clean && \
+npm install && \
+npm run install-bower && \
+npm run install-npm && \
+npm run remove-source-maps && \
+npm run install-dist
 cd ..

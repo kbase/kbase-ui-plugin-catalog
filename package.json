@@ -1,27 +1,28 @@
 {
-    "name": "kbase-ui-plugin-catalog",
-    "version": "1.0.0",
-    "description": "A ui plugin for the KBase App Catalog",
-    "main": "index.js",
-    "scripts": {
-        "build": "bash scripts/build-plugin.bash",
-        "build-dev": "bash scripts/build-plugin-dev.bash",
-        "install-dev": "bash scripts/install-plugin-dev.bash",
-        "watch": "nodemon --watch ./src --ext js,css,yml,json --exec 'yarn install-dev'"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/kbase/kbase-ui-plugin-catalog.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/kbase/kbase-ui-plugin-catalog/issues"
-    },
-    "homepage": "https://github.com/kbase/kbase-ui-plugin-catalog#readme",
-    "dependencies": {
-        "eslint": "7.2.0",
-        "standard": "14.3.4",
-        "nodemon": "2.0.4"
-    }
+  "name": "kbase-ui-plugin-catalog",
+  "version": "1.0.0",
+  "description": "A ui plugin for the KBase App Catalog",
+  "main": "index.js",
+  "scripts": {
+    "build": "bash scripts/build-plugin.bash",
+    "build-dev": "bash scripts/build-plugin-dev.bash",
+    "watch": "nodemon --watch ./src --ext js,css,yml,json --exec 'npm run build-dev'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kbase/kbase-ui-plugin-catalog.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kbase/kbase-ui-plugin-catalog/issues"
+  },
+  "homepage": "https://github.com/kbase/kbase-ui-plugin-catalog#readme",
+  "dependencies": {
+    "eslint": "8.17.0",
+    "eslint-config-preact": "1.3.0",
+    "nodemon": "2.0.16",
+    "standard": "17.0.0",
+    "jest": "28.1.1"
+  }
 }

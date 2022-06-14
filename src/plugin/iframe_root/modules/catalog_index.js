@@ -1,92 +1,45 @@
 define([
-    'bluebird',
-    'kb_common/dom',
-    'kb_common/html',
-    'kb_widget/widgetSet'
-], function (Promise, DOM, html, WidgetSet) {
-    'use strict';
-    function widget(config) {
-        var mount, container, runtime = config.runtime,
-            widgetSet = WidgetSet.make({runtime: runtime}),
-            layout;
+    'preact',
+    'htm',
+    'components/CatalogIndex/CatalogIndexLoader'
+], (
+    preact,
+    htm,
+    CatalogIndex
+) => {
+    const html = htm.bind(preact.h);
 
-        // Mini widget manager
-        // TODO: the jquery name should be stored in the widget definition not here.
-        function render() {
-
-            // the catalog home page is simple the catalog browser
-            var div=html.tag('div');
-            return div({
-                id: widgetSet.addWidget('catalog_index_widget',
-                    {
-                        jqueryName: 'KBaseCatalogIndex',
-                        jquery_name:'KBaseCatalogIndex'
-                    })
-            });
+    class CatalogIndexPanel {
+        constructor({runtime}) {
+            this.runtime = runtime;
+            this.root = null;
+            this.container = null;
         }
 
-        layout = render();
-
-        // Widget Interface Implementation
-
-        function init(config) {
-            return Promise.try(function () {
-                return widgetSet.init(config);
-            });
+        attach(node) {
+            this.root = node;
+            this.container = node.appendChild(document.createElement('div'));
         }
-        function attach(node) {
-            runtime.send('ui', 'setTitle', 'Catalog Index');
-            return Promise.try(function () {
-                mount = node;
-                container = mount.appendChild(DOM.createElement('div'));
-                container.innerHTML = layout;
-                // mount.appendChild(container);
-                return widgetSet.attach();
-            });
-        }
-        function start(params) {
-            return Promise.try(function () {
-                return widgetSet.start(params);
-            });
-        }
-        function run(params) {
-            return Promise.try(function () {
-                return widgetSet.run(params);
-            });
-        }
-        function stop() {
-            return Promise.try(function () {
-                return widgetSet.stop();
-            });
-        }
-        function detach() {
-            runtime.send('ui', 'setTitle', '');
-            return Promise.try(function () {
-                return widgetSet.detach();
-            });
-        }
-        function destroy() {
-            return Promise.try(function () {
-                return widgetSet.destroy();
-            });
+        start() {
+            this.runtime.send('ui', 'setTitle', 'Catalog Index');
+            const content = html`
+                <${CatalogIndex} runtime=${this.runtime} />
+            `;
+            preact.render(content, this.container);
         }
 
-        // Widget Interface
-        return {
-            init: init,
-            attach: attach,
-            start: start,
-            run: run,
-            stop: stop,
-            detach: detach,
-            destroy: destroy
-        };
+        stop() {
+        }
+
+        detach() {
+            if (this.container) {
+                this.container.innerHTML = '';
+                if (this.root && this.container.parentNode == this.root) {
+                    this.root.removeChild(this.container);
+                }
+            }
+        }
     }
 
-    return {
-        make: function (config) {
-            return widget(config);
-        }
-    };
-
+    return CatalogIndexPanel;
 });

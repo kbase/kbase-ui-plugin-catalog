@@ -8,9 +8,6 @@ source:
     - file: catalog_styles
 install:
   widgets:
-    - module: catalog_index
-      id: catalog_index
-      type: factory
     - module: catalog_app_browser
       id: catalog_home
       type: factory
@@ -67,12 +64,6 @@ install:
       title: App Catalog
       config:
         jqueryName: KBaseCatalogBrowser
-      type: kbwidget
-    - module: widgets/kbaseCatalogIndex
-      id: catalog_index_widget
-      title: Catalog Index
-      config:
-        jqueryName: KBaseCatalogIndex
       type: kbwidget
     - module: widgets/kbaseCatalogFunctionBrowser
       id: catalog_function_browser_widget
@@ -161,7 +152,7 @@ install:
 views:
   - module: ../catalog_index
     view: catalogIndex
-    type: factory
+    type: es6
   - module: ../catalog_app_browser
     view: appsBrowser
     reentrant: false
