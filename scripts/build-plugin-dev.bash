@@ -1,3 +1,3 @@
 cd build
-yarn install-dev
+npm run install-dev
 cd ..

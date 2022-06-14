@@ -13,36 +13,30 @@ module.exports = function (grunt) {
             npm: './node_modules/'
         },
         copy: {
-            vega: {
+            preact: {
                 expand: true,
                 flatten: true,
-                src: 'node_modules/vega-lib/build/vega.js',
-                dest: '../src/plugin/iframe_root/js/vendor/vega'
+                src: 'node_modules/preact/dist/preact.umd.js',
+                dest: '../src/plugin/iframe_root/modules/vendor/preact'
             },
-            d3: {
+            htm: {
                 expand: true,
                 flatten: true,
-                src: 'node_modules/d3/dist/d3.js',
-                dest: '../src/plugin/iframe_root/js/vendor/d3'
+                src: 'node_modules/htm/dist/htm.umd.js',
+                dest: '../src/plugin/iframe_root/modules/vendor/htm'
             },
-            dagre: {
+            dompurify: {
                 expand: true,
                 flatten: true,
-                src: 'node_modules/dagre/dist/dagre.js',
-                dest: '../src/plugin/iframe_root/js/vendor/dagre'
-            },
-            'dagre-d3': {
-                expand: true,
-                flatten: true,
-                src: 'node_modules/dagre-d3/dist/dagre-d3.js',
-                dest: '../src/plugin/iframe_root/js/vendor/dagre-d3'
+                src: 'node_modules/dompurify/dist/purify.js',
+                dest: '../src/plugin/iframe_root/modules/vendor/dompurify'
             },
             'pure-uuid': {
                 expand: true,
                 flatten: true,
-                src: 'node_modules/pure-uuid/uuid',
-                dest: '../src/plugin/iframe_root/js/vendor/pure-uuid'
-            }
+                src: 'node_modules/pure-uuid/uuid.js',
+                dest: '../src/plugin/iframe_root/modules/vendor/pure-uuid'
+            },
         }
     });
 

@@ -6,10 +6,8 @@ define([
     './services/session',
     './services/widget'
 ], (Promise, props, Messenger, WidgetManager, SessionService, WidgetService) => {
-    'use strict';
-
     class Runtime {
-        constructor({ token, username, config, pluginConfig }) {
+        constructor({authorization, token, username, config, pluginConfig}) {
             this.token = token;
             this.username = username;
             this.widgetManager = new WidgetManager({
@@ -17,19 +15,20 @@ define([
                     runtime: this
                 }
             });
+            this.authorization = authorization;
 
-            this.configDb = new props.Props({ data: config });
+            this.configDb = new props.Props({data: config});
 
             this.pluginPath = `/modules/plugins/${pluginConfig.package.name}/iframe_root`;
-            this.pluginResourcePath = this.pluginPath + '/resources';
+            this.pluginResourcePath = `${this.pluginPath}/resources`;
 
             this.messenger = new Messenger();
 
             this.heartbeatTimer = null;
 
             this.services = {
-                session: new SessionService({ runtime: this }),
-                widget: new WidgetService({ runtime: this })
+                session: new SessionService({runtime: this}),
+                widget: new WidgetService({runtime: this})
             };
         }
 
@@ -55,11 +54,11 @@ define([
         }
 
         send(channel, message, data) {
-            this.messenger.send({ channel, message, data });
+            this.messenger.send({channel, message, data});
         }
 
         receive(channel, message, handler) {
-            return this.messenger.receive({ channel, message, handler });
+            return this.messenger.receive({channel, message, handler});
         }
 
         recv(channel, message, handler) {
@@ -73,7 +72,7 @@ define([
         start() {
             return Promise.try(() => {
                 this.heartbeatTimer = window.setInterval(() => {
-                    this.send('app', 'heartbeat', { time: new Date().getTime() });
+                    this.send('app', 'heartbeat', {time: new Date().getTime()});
                 }, 1000);
                 return this.services.session.start();
             });

@@ -1,0 +1,16 @@
+.CatalogIndex .-row {
+    border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+    margin: 1em 0;
+}
+
+.CatalogIndex .-developer {
+    font-weight: bold;
+    font-style: italic;
+    color: green;
+}
+
+.CatalogIndex .-admin {
+    font-weight: bold;
+    font-style: italic;
+    color: orange;
+}

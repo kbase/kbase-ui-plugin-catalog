@@ -1,0 +1,46 @@
+---
+index:
+  - title: App Catalog
+    path: apps
+    description: Browse and search for KBase apps.  This is probably what you are looking for.
+  - title: App Catalog Help Pages
+    url: https://docs.kbase.us/apps/catalog
+    description: A brief introduction to KBase apps and the App Catalog.
+  - title: Module Catalog
+    path: modules
+    description: View registered KBase Modules.  Modules are groups of related Apps, code, functions, data and other components registered from a single git repository by developers using the KBase SDK.
+  - title: Function Catalog
+    path: functions
+    developer: true
+    description: Browse and search for functions that you can call from your code.  Think of these functions as your KBase API library that anyone can contribute to.
+  - title: Data Type Catalog
+    path: datatypes
+    developer: true
+    description: View low-level data type schemas and specifications.  In general, don't operate on these schemas directly in your code because they will change.  Instead find an appropriate function to get and save data using a standard file format.
+  - title: Web Service Status and Management
+    path: services
+    developer: true
+    description:  Browse and manage KBase web services, which you should only be using for interactive browser visualizations.  For SDK-built Apps, take a look at the Functions instead.
+  - title: New Module Registration Page
+    path: register
+    developer: true
+    description: Register new Modules built with the KBase SDK.  Use this page only for your first registration. After that, go to your Module page to access developer tools.
+  - title: Catalog App Registration Status
+    path: status
+    developer: true
+    description: View the current status of the KBase Catalog Service, such as recent module registrations
+  - title: Job Queue
+    path: queue
+    authenticationRequired: true
+    description: View the current status of the HTCondor Job Queue
+  - title: Job Run Statistics
+    path: stats
+    description: View summary statistics of KBase Apps.
+  - title: KBase SDK
+    url: https://github.com/kbase/kb_sdk
+    developer: true
+    description: Learn and get the tools for building your own KBase Modules, Apps, Services, and Functions
+  - title: Catalog Administration
+    url: admin
+    admin: true
+    description: You must be a Catalog administrator.  You should know what you're doing.
