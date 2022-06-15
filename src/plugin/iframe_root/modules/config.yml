@@ -11,9 +11,6 @@ install:
     - module: catalog_app_browser
       id: catalog_home
       type: factory
-    - module: catalog_app_viewer
-      id: catalog_app_viewer
-      type: factory
     - module: catalog_module_browser
       id: catalog_module_browser
       type: factory
@@ -70,12 +67,6 @@ install:
       title: Developer Function Catalog
       config:
         jqueryName: kbaseCatalogFunctionBrowser
-      type: kbwidget
-    - module: widgets/kbaseCatalogAppViewer
-      id: catalog_app_viewer_widget
-      title: App Catalog
-      config:
-        jqueryName: KBaseCatalogAppViewer
       type: kbwidget
     - module: widgets/kbaseCatalogModuleBrowser
       id: catalog_module_browser_widget
@@ -150,16 +141,16 @@ install:
         jqueryName: KBaseCatalogFunctionViewer
       type: kbwidget
 views:
-  - module: ../catalog_index
+  - module: ../CatalogIndexPanel
     view: catalogIndex
     type: es6
   - module: ../catalog_app_browser
     view: appsBrowser
     reentrant: false
     type: factory
-  - module: ../catalog_app_viewer
+  - module: ../CatalogAppViewerPanel
     view: appView
-    type: factory
+    type: es6
   - module: ../catalog_module_browser
     view: moduleBrowser
     type: factory

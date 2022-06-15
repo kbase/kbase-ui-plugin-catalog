@@ -1,0 +1,253 @@
+.CatalogAppViewer {
+
+}
+
+.CatalogAppViewer .-linkback {
+    margin: 1em 0;
+}
+
+/* HEADER */
+
+.CatalogAppViewer .-header {
+    background: #f1f1f5;
+    border-radius: 2px;
+    color: #666;
+    margin-left: 1em;
+    padding-bottom: 1em;
+}
+
+.CatalogAppViewer .-header > .-title-bar {
+    display: flex;
+    flex-direction: row;
+}
+
+.CatalogAppViewer .-header > .-title-bar > .-logo {
+    flex: 0 0 150px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: top; */
+    padding: 2em;
+    text-align: center;
+}
+.CatalogAppViewer .-header > .-title-bar > .-title-area {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* .CatalogAppViewer .-logo {
+    padding: 0em;
+    margin: 1em;
+    text-align: center;
+} */
+
+.CatalogAppViewer .-header > .-title-bar > .-logo > img {
+    width: 100%;
+}   
+
+.CatalogAppViewer .-header .-title {
+    font-size: 2em;
+}
+
+.CatalogAppViewer .-header .-statsBar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    padding: 0em 2em 
+}
+
+.CatalogAppViewer .-header .-statsBar .-favoritesStar {
+    flex: 2 1 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.CatalogAppViewer .-header .-statsBar .-favoritesStar .-star {
+    cursor: pointer;
+}
+
+.CatalogAppViewer .-header .-statsBar .-favoritesStar .-star > .-nonfavorite {
+    color: orange;
+}
+
+.CatalogAppViewer .-header .-statsBar .-favoritesStar .-star > .-favorite {
+    color: red;
+}
+
+
+
+
+.CatalogAppViewer .-header .-statsBar .-releaseTags {
+    flex:  2 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.CatalogAppViewer .-header .-statsBar .-runStats {
+    flex: 8 1 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.CatalogAppViewer .-header .-statsBar .-runStatsBar {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.CatalogAppViewer .-header .-statsBar .-runStatsBar .-stat {
+    flex: 0 0 auto;
+    margin: 0 2em;
+}
+
+.CatalogAppViewer .-header .-statsBar .-runStatsBar .-stat.-calls {
+
+}
+.CatalogAppViewer .-header .-statsBar .-runStatsBar .-stat.-success {
+
+}
+.CatalogAppViewer .-header .-statsBar .-runStatsBar .-stat.-run-time {
+
+}
+
+/* SUBHEADER */
+
+.CatalogAppViewer .-subheader {
+    margin-left: 1em;
+}
+.CatalogAppViewer .-subheader .-subtitle {
+    font-size: 1.2em;
+    margin: 1.5em;
+    /* border-bottom: 1px solid rgba(200, 200, 200, 0.5); */
+}
+
+.CatalogAppViewer .-screenshots {
+    /* padding-bottom: 2em; */
+}
+
+.CatalogAppViewer .-screenshots > img {
+    width: 300px;
+    cursor: pointer;
+}
+
+.CatalogAppViewer .-screenshots .carousel-control.left, .CatalogAppViewer .-screenshots .carousel-control.right {
+    background-image: none
+}
+
+.CatalogAppViewer .-screenshots .modal-dialog {
+    width: 90%;
+    height: 80%;
+    margin: 5%;
+    padding: 0;
+  }
+  
+  .CatalogAppViewer .-screenshots .modal-content {
+    height: auto;
+    min-height: 100%;
+    border-radius: 0;
+  }
+
+  .CatalogAppViewer .-screenshots .modal .-image {
+    max-height: 600px;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .CatalogAppViewer .-screenshots .modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .CatalogAppViewer .-screenshots .modal-content > .modal-body {
+    flex: 1 1 0;
+  }
+
+
+/* BODY */ 
+
+.CatalogAppViewer .-body {
+    margin-left: 1em;
+}
+
+.CatalogAppViewer .-section {
+    margin-top: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.5);
+}
+
+.CatalogAppViewer .-body .-parameters {
+
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup {
+    margin: 1em 0;
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-title {
+
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-body {
+    margin-left: 1em;
+}
+
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-body > .-parameter {
+    margin: 0 0 1em 1em;
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-body > .-none-available {
+    margin: 0 0 1em 1em;
+    font-style: italic;
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-body > .-parameter > .-title {
+    font-weight: bold;
+}
+
+.CatalogAppViewer .-body .-parameters > .-parameterGroup > .-body > .-parameter > .-description {
+    margin-left: 1em;
+}
+
+.CatalogAppViewer .-body > .-publications {
+    margin: 2em 0 2em 0;
+}
+
+.CatalogAppViewer .-body > .-publications > .-title {
+    font-weight: bold;
+}
+
+.CatalogAppViewer .-body > .-publications > .-publication {
+    margin: 0 0 0.5em 1em;
+}
+
+.CatalogAppViewer .-body > .-publications > .-publication > .-display-text {
+    font-style: italic;
+}
+
+.CatalogAppViewer .-body > .-app-info {
+    border: 1px solid rgba(100, 100, 100, 1);
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+}
+
+.CatalogAppViewer .-body > .-app-info > div {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0.5em;
+}
+
+.CatalogAppViewer .-body > .-app-info > div > div:nth-child(1) {
+    width: 10em;
+    font-weight: bold;
+}
