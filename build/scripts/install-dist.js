@@ -1,6 +1,5 @@
 /*eslint-env node */
 /*eslint strict: ["error", "global"] */
-'use strict';
 const bluebird = require('bluebird');
 const glob = bluebird.promisify(require('glob').Glob);
 const fs = bluebird.promisifyAll(require('fs-extra'));
@@ -21,6 +20,10 @@ async function copyFiles(rootDir) {
     await fs.copyAsync(source, dest);
 }
 
+function log(message) {
+    console.log(message);
+}
+
 async function minify(rootDir) {
     const root = rootDir.split('/');
 
@@ -33,13 +36,13 @@ async function minify(rootDir) {
             nodir: true
         }
     );
-    console.log(`minifying ${matches.length} files...`);
+    log(`minifying ${matches.length} files...`);
 
     return Promise.all(
         matches.map(async (match) => {
             // console.log(`minifying ${match}...`);
             const contents = await fs.readFileAsync(match, 'utf8');
-            const result = Terser.minify(contents, {
+            const result = await Terser.minify(contents, {
                 output: {
                     beautify: false,
                     max_line_len: 80,
@@ -54,10 +57,10 @@ async function minify(rootDir) {
                 safari10: true
             });
             if (result.error) {
-                console.error('Error minifying file: ' + match, result);
-                throw new Error('Error minifying file ' + match) + ':' + result.error;
+                console.error(`Error minifying file: ${  match}`, result);
+                throw `${new Error(`Error minifying file ${  match}`)  }:${  result.error}`;
             } else if (result.code.length === 0) {
-                console.warn('Skipping empty file: ' + match);
+                console.warn(`Skipping empty file: ${  match}`);
             } else {
                 return fs.writeFileAsync(match, result.code);
             }
@@ -68,7 +71,7 @@ async function minify(rootDir) {
 async function taritup(rootDir) {
     const dir = 'dist';
     const dest = rootDir.concat(['dist.tgz']).join('/');
-    console.log('tarring from ' + dir + ', to ' + dest);
+    log(`tarring from ${  dir  }, to ${  dest}`);
     return tar.c({
         gzip: true,
         file: dest,
@@ -83,18 +86,18 @@ async function main() {
     const cwd = process.cwd().split('/');
     cwd.push('..');
     const projectPath = path.normalize(cwd.join('/'));
-    console.log(`Project path: ${projectPath}`);
-    console.log('Copying files to dist...');
+    log(`Project path: ${projectPath}`);
+    log('Copying files to dist...');
     await copyFiles(projectPath);
-    console.log('Minifying dist...');
+    log('Minifying dist...');
     await minify(projectPath);
-    console.log('tar-ing dist...');
+    log('tar-ing dist...');
     try {
         await taritup(projectPath.split('/'));
     } catch (ex) {
-        console.error('Error tarring up dist! ' + ex.message);
+        console.error(`Error tarring up dist! ${  ex.message}`);
     }
-    console.log('done');
+    log('done');
 }
 
 

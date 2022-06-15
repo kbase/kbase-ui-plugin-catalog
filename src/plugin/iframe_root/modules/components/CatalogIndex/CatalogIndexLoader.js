@@ -3,6 +3,8 @@ define([
     'htm',
     'kb_service/client/catalog',
     './CatalogIndex',
+    'components/Loading',
+    'components/ErrorAlert',
     'yaml!./CatalogIndex.yaml',
 
     // for effect
@@ -12,6 +14,8 @@ define([
     htm,
     Catalog,
     CatalogIndex,
+    Loading,
+    ErrorAlert,
     catalogIndex
 ) => {
     const {h, Component} = preact;
@@ -59,11 +63,11 @@ define([
         }
 
         renderLoading() {
-            return html`<div>Loading...</div>`;
+            return html`<${Loading} message="Loading..." />`;
         }
 
         renderError(message) {
-            return html`<div className="alert alert-danger">Error! ${message}</div>`;
+            return html`<${ErrorAlert} message=${message} />`;
         }
 
         renderState() {
