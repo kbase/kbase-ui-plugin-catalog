@@ -1,5 +1,5 @@
 define(['require'], (require) => {
-    'use strict';
+
     function promiseTry(fun) {
         return new Promise((resolve, reject) => {
             try {
@@ -10,7 +10,7 @@ define(['require'], (require) => {
         });
     }
     class Dispatcher {
-        constructor({ node, runtime, views }) {
+        constructor({node, runtime, views}) {
             this.currentPanel = null;
             this.hostNode = node;
             this.runtime = runtime;
@@ -30,9 +30,9 @@ define(['require'], (require) => {
 
         start() {
             return Promise.all(
-                this.views.map(({ module, view, type }) => {
+                this.views.map(({module, view, type}) => {
                     return this.loadModule(module).then((module) => {
-                        return { module, view, type: type || 'es6' };
+                        return {module, view, type: type || 'es6'};
                     });
                 })
             ).then((modules) => {
@@ -58,16 +58,16 @@ define(['require'], (require) => {
             }).then(() => {
                 return this.currentPanel.widget.detach();
             })
-            .then(() => {
-                this.hostNode.innerHTML = '';
-            });
+                .then(() => {
+                    this.hostNode.innerHTML = '';
+                });
         }
 
-        dispatch({ view: viewId, params }) {
+        dispatch({view: viewId, params}) {
             const view = this.selectView(viewId);
             if (!view || !view.module) {
                 console.warn('bad view request', viewId, params);
-                alert('oops, bad view request: ' + view);
+                alert(`oops, bad view request: ${  view}`);
                 return;
             }
 
@@ -84,13 +84,13 @@ define(['require'], (require) => {
                     let widget;
                     switch (view.type) {
                     case 'factory':
-                        widget = view.module.make({ runtime: this.runtime });
+                        widget = view.module.make({runtime: this.runtime});
                         break;
                     case 'es6':
-                        widget = new view.module({ runtime: this.runtime });
+                        widget = new view.module({runtime: this.runtime});
                         break;
                     default:
-                        throw new Error('Invalid view type: ' + view.type);
+                        throw new Error(`Invalid view type: ${  view.type}`);
                     }
                     this.currentPanel = {
                         view,

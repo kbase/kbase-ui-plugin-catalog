@@ -96,10 +96,9 @@ define([
 
             return html`
                 <div>
-                    <a href="/#dcatalog/modules/${moduleDetails.info.module_name}" target="_parent">
-                        ${moduleDetails.info.module_name}l
-                    </a>
-                    v.${moduleDetails.info.version}
+                    <a href="/#catalog/modules/${moduleDetails.info.module_name}" target="_parent">
+                        ${moduleDetails.info.module_name}
+                    </a> v${moduleDetails.info.version}
                 </div>
             `;
         }
@@ -493,7 +492,7 @@ define([
             `;
         }
 
-       
+
 
         render() {
             return html`
