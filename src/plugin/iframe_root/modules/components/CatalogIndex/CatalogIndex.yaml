@@ -41,6 +41,6 @@ index:
     developer: true
     description: Learn and get the tools for building your own KBase Modules, Apps, Services, and Functions
   - title: Catalog Administration
-    url: admin
+    path: admin
     admin: true
     description: You must be a Catalog administrator.  You should know what you're doing.
