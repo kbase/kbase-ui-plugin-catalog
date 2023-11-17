@@ -32,7 +32,24 @@
                     "bower_components/bootstrap/dist/js/bootstrap.js": "bootstrap.js"
                 }
             ],
-            "kbase-common-js": "bower_components/kbase-common-js/dist/kb_common/**"
+            "kbase-common-es6": "bower_components/kbase-common-es6/src/**",
+            "kbase-common-js": "bower_components/kbase-common-js/dist/kb_common/**",
+            "kbase-service-clients-js": "bower_components/kbase-service-clients-js/dist/kb_service/**",
+            "kbase-ui-widget": "bower_components/kbase-ui-widget/src/kb/widget/**",
+            "font-awesome": [
+                {
+                    "bower_components/font-awesome/css/font-awesome.css": "css/font-awesome.css"
+                },
+                {
+                    "bower_components/font-awesome/fonts/**": "fonts/"
+                }
+            ],
+            "pure-uuid": "bower_components/pure-uuid/uuid.js",
+            "kbase-knockout-extensions-es6": "bower_components/kbase-knockout-extensions-es6/src/**",
+            "knockout-arraytransforms": "bower_components/knockout-arraytransforms/dist/knockout-arraytransforms.js",
+            "knockout-switch-case": "bower_components/knockout-switch-case/knockout-switch-case.js",
+            "kbase-common-ts": "bower_components/kbase-common-ts/dist/*.js",
+            "knockout-projections": "bower_components/knockout-projections/dist/knockout-projections.js"
         }
     },
     "dependencies": {
