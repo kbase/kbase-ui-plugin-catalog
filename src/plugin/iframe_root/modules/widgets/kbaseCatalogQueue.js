@@ -596,7 +596,7 @@ define([
                     $('<div>')
                         .addClass('kbcb-back-link')
                         .append(
-                            $('<a href=\'/#catalog\' target="_parent">').append(
+                            $('<a href=\'/#catalog\' target="_top">').append(
                                 '<i class=\'fa fa-chevron-left\'></i> back to the Catalog Index'
                             )
                         )

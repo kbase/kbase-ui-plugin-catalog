@@ -40,7 +40,7 @@ define([
                     // TODO: what is "narrativestore"???
                     // TODO: enable warnings; may not be applicable any longer
                     // this.$elem.append(
-                    //     `&nbsp Legacy apps not supported on this page yet. Go here for now:<a href="/#narrativestore/app/${props.id}" target="_parent">${props.id}</a>`
+                    //     `&nbsp Legacy apps not supported on this page yet. Go here for now:<a href="/#narrativestore/app/${props.id}" target="_top">${props.id}</a>`
                     // );
                     // return this;
                 }

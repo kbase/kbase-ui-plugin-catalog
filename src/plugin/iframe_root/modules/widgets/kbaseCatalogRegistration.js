@@ -189,7 +189,7 @@ define([
                     $('<div>')
                         .addClass('kbcb-back-link')
                         .append(
-                            $('<a href="/#catalog/apps" target="_parent">').append(
+                            $('<a href="/#catalog/apps" target="_top">').append(
                                 '<i class="fa fa-chevron-left"></i> back to the Catalog'
                             )
                         )

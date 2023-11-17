@@ -15,6 +15,26 @@
         "type": "git",
         "url": "git://github.com/kbase/kbase-ui-plugin-catalog"
     },
+    "install": {
+        "path": "./src/plugin/iframe_root/modules/vendor",
+        "sources": {
+            "bootstrap": [
+                {
+                    "bower_components/bootstrap/dist/css/bootstrap.css": "css/bootstrap.css"
+                },
+                {
+                    "bower_components/bootstrap/dist/css/bootstrap-theme.css": "css/bootstrap-theme.css"
+                },
+                {
+                    "bower_components/bootstrap/dist/fonts/**": "fonts/"
+                },
+                {
+                    "bower_components/bootstrap/dist/js/bootstrap.js": "bootstrap.js"
+                }
+            ],
+            "kbase-common-js": "bower_components/kbase-common-js/dist/kb_common/**"
+        }
+    },
     "dependencies": {
         "bluebird": "^3.0.0",
         "bootstrap": "^3.3.0",

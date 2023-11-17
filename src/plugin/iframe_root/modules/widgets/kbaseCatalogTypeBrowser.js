@@ -144,7 +144,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog" target="_parent">').append(
+                        $('<a href="/#catalog" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
                         )
                     )
@@ -189,7 +189,7 @@ define([
                                             owners +=
                                                 '<a href="/#people/' +
                                                 info.owners[o] +
-                                                '" target="_parent">' +
+                                                '" target="_top">' +
                                                 info.owners[o] +
                                                 '</a>';
                                         }
@@ -199,13 +199,13 @@ define([
                                             type_link:
                                                 '<a href="/#spec/module/' +
                                                 modName +
-                                                '" target="_parent">' +
+                                                '" target="_top">' +
                                                 modName +
                                                 '</a>.<a href="/#spec/type/' +
                                                 modName +
                                                 '.' +
                                                 typeName +
-                                                '" target="_parent">' +
+                                                '" target="_top">' +
                                                 typeName +
                                                 '</a>',
                                             ver: ver,

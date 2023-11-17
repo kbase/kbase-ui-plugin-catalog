@@ -71,7 +71,7 @@ define([
             }
             const authors =  interpolate(appFullInfo.authors.map((author) => {
                 return html`
-                    <a href="/#people/${author}" target="_parent">${author}</a>
+                    <a href="/#people/${author}" target="_top">${author}</a>
                 `;
             }), html`<span>, </span>`);
             return html`<span>by ${authors}</span>`;
@@ -96,7 +96,7 @@ define([
 
             return html`
                 <div>
-                    <a href="/#catalog/modules/${moduleDetails.info.module_name}" target="_parent">
+                    <a href="/#catalog/modules/${moduleDetails.info.module_name}" target="_top">
                         ${moduleDetails.info.module_name}
                     </a> v${moduleDetails.info.version}
                 </div>
@@ -342,7 +342,7 @@ define([
                     if (parameter.text_options && parameter.text_options.valid_ws_types) {
                         return parameter.text_options.valid_ws_types.map((typeName) => {
                             const url_prefix = typeName.includes('.') ? 'type' : 'module';
-                            return html`<a href="/#spec/${url_prefix}/${typeName}" target="_parent">${typeName}</a>`;
+                            return html`<a href="/#spec/${url_prefix}/${typeName}" target="_top">${typeName}</a>`;
                         });
                     }
                     return [];
@@ -498,7 +498,7 @@ define([
             return html`
             <div className="CatalogAppViewer">
                 <div className="-linkback">
-                    <a href="/#catalog/apps" target="_parent">
+                    <a href="/#catalog/apps" target="_top">
                         <i class="fa fa-chevron-left" /> back to the Catalog
                     </a>
                 </div>

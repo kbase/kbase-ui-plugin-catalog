@@ -129,7 +129,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog" target="_parent">').append(
+                        $('<a href="/#catalog" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
                         )
                     )
@@ -176,7 +176,7 @@ define([
                         moduleData['module_name_link'] =
                             '<a href="/#catalog/modules/' +
                             moduleData['module_name'] +
-                            '" target="_parent">' +
+                            '" target="_top">' +
                             moduleData['module_name'] +
                             '</a>';
                         moduleData['git_url_link'] =
@@ -194,7 +194,7 @@ define([
                             moduleData['owners_link'] +=
                                 '<a href="/#people/' +
                                 moduleData['owners'][o] +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 moduleData['owners'][o] +
                                 '</a>';
                         }

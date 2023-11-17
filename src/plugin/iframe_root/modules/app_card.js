@@ -231,7 +231,7 @@ define(['jquery'], function ($) {
                     $('<div>')
                         .addClass('kbcb-app-card-module')
                         .append(
-                            $('<a href="/#catalog/modules/' + module.module_name + '" target="_parent">')
+                            $('<a href="/#catalog/modules/' + module.module_name + '" target="_top">')
                                 .append(module.module_name)
                                 .on('click', function (event) {
                                     // have to stop propagation so we don't go to the app page first
@@ -256,7 +256,7 @@ define(['jquery'], function ($) {
                             break;
                         }
                         $authorDiv.append(
-                            $('<a href="/#people/' + info.authors[k] + '" target="_parent">')
+                            $('<a href="/#people/' + info.authors[k] + '" target="_top">')
                                 .append(info.authors[k])
                                 .on('click', function (event) {
                                     // have to stop propagation so we don't go to the app page first

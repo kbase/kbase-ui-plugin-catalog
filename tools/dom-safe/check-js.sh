@@ -1,0 +1,1 @@
+python tools/dom-safe/check-js.py "${PWD}/src/plugin/iframe_root" "vendor"
