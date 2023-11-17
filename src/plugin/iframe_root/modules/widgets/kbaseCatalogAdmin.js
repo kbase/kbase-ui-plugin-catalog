@@ -114,7 +114,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog" target="_parent">').append(
+                        $('<a href="/#catalog" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
                         )
                     )
@@ -188,7 +188,7 @@ define([
         renderBasicStatus: function () {
             var self = this;
 
-            self.$basicStatusDiv.append('<a href="/#catalog/status" target="_parent">Catalog Status Page</a><br><br>');
+            self.$basicStatusDiv.append('<a href="/#catalog/status" target="_top">Catalog Status Page</a><br><br>');
             self.$basicStatusDiv.append('Running <b>v' + self.catalog_version + '</b> of the Catalog Server on: ');
             self.$basicStatusDiv.append(
                 '<a href="' +
@@ -388,7 +388,7 @@ define([
                                 $(
                                     '<a href="/#catalog/modules/' +
                                         self.released_modules[k].module_name +
-                                        '" target="_parent">'
+                                        '" target="_top">'
                                 ).append(self.released_modules[k].module_name)
                             )
                         )
@@ -414,7 +414,7 @@ define([
                                 $(
                                     '<a href="/#catalog/modules/' +
                                         self.unreleased_modules[k].module_name +
-                                        '" target="_parent">'
+                                        '" target="_top">'
                                 ).append(self.unreleased_modules[k].module_name)
                             )
                         )
@@ -439,7 +439,7 @@ define([
                                 $(
                                     '<a href="/#catalog/modules/' +
                                         self.inactive_modules[k].module_name +
-                                        '" target="_parent">'
+                                        '" target="_top">'
                                 ).append(self.inactive_modules[k].module_name)
                             )
                         )
@@ -477,7 +477,7 @@ define([
                         $li.append(
                             '<a href="/#catalog/modules/' +
                                 mod.module_name +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 mod.module_name +
                                 '</a>'
                         );
@@ -491,7 +491,7 @@ define([
                             $li.append(
                                 '<a href="/#people/' +
                                     mod.owners[owner] +
-                                    '" target="_parent">' +
+                                    '" target="_top">' +
                                     mod.owners[owner] +
                                     '</a>'
                             );
@@ -687,7 +687,7 @@ define([
             for (var k = 0; k < self.dev_list.length; k++) {
                 $devList.append(
                     $('<div>').append(
-                        $('<a href="/#people/' + self.dev_list[k] + '" target="_parent">').append(self.dev_list[k])
+                        $('<a href="/#people/' + self.dev_list[k] + '" target="_top">').append(self.dev_list[k])
                     )
                 );
             }
@@ -842,7 +842,7 @@ define([
                                 $(
                                     '<a href="/#catalog/modules/' +
                                         self.client_groups[k].module_name +
-                                        '" target="_parent">'
+                                        '" target="_top">'
                                 ).append(self.client_groups[k].module_name)
                             )
                         )
@@ -1082,7 +1082,7 @@ define([
                     $('<tr>')
                         .append(
                             $('<td>').append(
-                                $('<a href="/#catalog/modules/' + module_name + '" target="_parent">').append(
+                                $('<a href="/#catalog/modules/' + module_name + '" target="_top">').append(
                                     module_name
                                 )
                             )

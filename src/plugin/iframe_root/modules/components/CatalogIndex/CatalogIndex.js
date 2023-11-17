@@ -31,7 +31,7 @@ define([
 
         renderIndexURL({url, path, title}) {
             if (path) {
-                return html`<a href="/#catalog/${path}" target="_parent">${title}</a>`;
+                return html`<a href="/#catalog/${path}" target="_top">${title}</a>`;
             }
             return html`<a href="${url}" target="_blank">${title} <span className="fa fa-link" /></a>`;
         }

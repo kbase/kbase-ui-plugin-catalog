@@ -105,7 +105,7 @@ define([
             newEntry['module_name_link'] =
                 '<a href="/#catalog/modules/' +
                 entry['module_name'] +
-                '" target="_parent">' +
+                '" target="_top">' +
                 entry['module_name'] +
                 '</a>';
             newEntry['version'] = entry['version'];
@@ -179,7 +179,7 @@ define([
                         $('td:eq(0)', nRow).html(
                             '<a href="/#catalog/modules/' +
                                 aData['module_name'] +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 aData['module_name'] +
                                 '</a>'
                         );
@@ -551,7 +551,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog" target="_parent">').append(
+                        $('<a href="/#catalog" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
                         )
                     )

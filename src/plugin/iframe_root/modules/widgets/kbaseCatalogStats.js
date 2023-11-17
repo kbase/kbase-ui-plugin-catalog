@@ -705,7 +705,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog" target="_parent">').append(
+                        $('<a href="/#catalog" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
                         )
                     )
@@ -776,11 +776,11 @@ define([
                         var meanQueueTime = s.total_queue_time / s.number_of_calls;
 
                         var stat = {
-                            id: '<a href="/#catalog/apps/' + s.full_app_id + '/dev" target="_parent">' + id + '</a>',
+                            id: '<a href="/#catalog/apps/' + s.full_app_id + '/dev" target="_top">' + id + '</a>',
                             module:
                                 '<a href="/#catalog/modules/' +
                                 s.module_name +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 s.module_name +
                                 '</a>',
                             nCalls: s.number_of_calls,
@@ -839,8 +839,8 @@ define([
                             module = s.app.split('/')[0];
                             id = s.app.split('/')[1];
                         }
-                        id = '<a href="/#catalog/apps/' + module + '/' + id + '/dev" target="_parent">' + id + '</a>';
-                        module = '<a href="/#catalog/modules/' + module + '" target="_parent">' + module + '</a>';
+                        id = '<a href="/#catalog/apps/' + module + '/' + id + '/dev" target="_top">' + id + '</a>';
+                        module = '<a href="/#catalog/modules/' + module + '" target="_top">' + module + '</a>';
                     } else {
                         if (s.func) {
                             id = 'API Call: ' + s.func;
@@ -858,7 +858,7 @@ define([
                         id: id,
                         module: module,
                         n: s.n,
-                        u: '<a href="/#people/' + s.user + '" target="_parent">' + s.user + '</a>'
+                        u: '<a href="/#people/' + s.user + '" target="_top">' + s.user + '</a>'
                     };
                     self.adminStats.push(stat);
                 }

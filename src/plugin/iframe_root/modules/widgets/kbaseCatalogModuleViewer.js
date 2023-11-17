@@ -174,7 +174,7 @@ define([
                 if (k > 0) {
                     $owners.append(', ');
                 }
-                $owners.append('<a href="/#people/' + username + '" target="_parent">' + username + '</a>');
+                $owners.append('<a href="/#people/' + username + '" target="_top">' + username + '</a>');
                 if (self.runtime.service('session').getUsername() === info.owners[k]) {
                     isOwner = true;
                 }
@@ -224,7 +224,7 @@ define([
                             .append(
                                 '<a href="/#catalog/status/' +
                                     info.module_name +
-                                    '" target="_parent">View recent registrations</a><br><br>'
+                                    '" target="_top">View recent registrations</a><br><br>'
                             )
                             .append(self.renderVersion('dev', info.dev))
                     )
@@ -297,7 +297,7 @@ define([
                                     id +
                                     '/' +
                                     tag +
-                                    '" target="_parent">' +
+                                    '" target="_top">' +
                                     id +
                                     '</a></li>'
                             );
@@ -307,7 +307,7 @@ define([
                                     this.moduleDetails.info.module_name +
                                     '/' +
                                     id +
-                                    '" target="_parent">' +
+                                    '" target="_top">' +
                                     id +
                                     '</a></li>'
                             );
@@ -337,7 +337,7 @@ define([
                                 id +
                                 '/' +
                                 version.git_commit_hash +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 id +
                                 '</a></li>'
                         );
@@ -388,7 +388,7 @@ define([
             $adminContent.append(
                 '<br><a href="/#catalog/status/' +
                     self.moduleDetails.info.module_name +
-                    '" target="_parent">View recent registrations</a><br>'
+                    '" target="_top">View recent registrations</a><br>'
             );
 
             $adminContent.append('<br><b>Module state information:</b>');
@@ -547,7 +547,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog/apps"  target="_parent">').append(
+                        $('<a href="/#catalog/apps"  target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog'
                         )
                     )

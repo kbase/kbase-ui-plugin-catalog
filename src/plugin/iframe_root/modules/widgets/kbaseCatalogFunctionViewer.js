@@ -157,7 +157,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog/functions" target="_parent">').append(
+                        $('<a href="/#catalog/functions" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Function Catalog'
                         )
                     )
@@ -243,7 +243,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-app-page-module')
                     .append(
-                        $('<a href="/#catalog/modules/' + info.module_name + '" target="_parent">').append(
+                        $('<a href="/#catalog/modules/' + info.module_name + '" target="_top">').append(
                             info.module_name
                         )
                     )
@@ -258,7 +258,7 @@ define([
                         $authorDiv.append(', ');
                     }
                     $authorDiv.append(
-                        $('<a href="/#people/' + info.authors[k] + '" target="_parent">')
+                        $('<a href="/#people/' + info.authors[k] + '" target="_top">')
                             .append(info.authors[k])
                             .on('click', function (event) {
                                 // have to stop propagation so we don't go to the app page first

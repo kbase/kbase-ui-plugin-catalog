@@ -1,7 +1,25 @@
+# macOS
+.DS_Store
+
+# Build and Developer tools.
 node_modules/
 bower_components/
+_trash/
+
+# The dist directory is created during a build and left in place; it can be used in side-by-side development with
+# kbase-ui.
 /dist/
-.DS_Store
-_attic/
+dist.tgz
+# Used for XDG_CONFIG_HOME target (when we can get that to work!)
+__xdg__
+
+# We don't check the vendor directory in; the vendor deps are only installed during
+# development, are captured in the dist.tgz.
 vendor/
-/.idea/
+
+# Support procrastination!
+/_attic/
+
+# IDEs
+.idea
+.vscode

@@ -235,16 +235,16 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_parent">').append('Status'));
+            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_top">').append('Status'));
 
             var $registerLink = $('<li>').append(
-                $('<a href="/#catalog/register" target="_parent">').append(
+                $('<a href="/#catalog/register" target="_top">').append(
                     '<i class="fa fa-plus-circle"></i> Add Module'
                 )
             );
 
             var $indexLink = $('<li>').append(
-                $('<a href="/#catalog" target="_parent">').append('<i class="fa fa-bars"></i> Index')
+                $('<a href="/#catalog" target="_top">').append('<i class="fa fa-bars"></i> Index')
             );
             var $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
@@ -646,7 +646,7 @@ define([
                                 .css({ color: '#777' })
                                 .append(
                                     $('<h4>').append(
-                                        '<a href="/#catalog/modules/' + m + '" target="_parent">' + m + '</a>'
+                                        '<a href="/#catalog/modules/' + m + '" target="_top">' + m + '</a>'
                                     )
                                 )
                         );
@@ -674,7 +674,7 @@ define([
                             .css({ color: '#777' })
                             .append(
                                 $('<h4>').append(
-                                    '<a href="/#people/' + devs[k] + '" target="_parent">' + devs[k] + '</a>'
+                                    '<a href="/#people/' + devs[k] + '" target="_top">' + devs[k] + '</a>'
                                 )
                             )
                     );
@@ -839,7 +839,7 @@ define([
                             .css({ color: '#777' })
                             .append(
                                 $('<h4>').append(
-                                    $('<a href="/#spec/type/' + types[k] + '" target="_parent">').append(types[k])
+                                    $('<a href="/#spec/type/' + types[k] + '" target="_top">').append(types[k])
                                 )
                             )
                     );

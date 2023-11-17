@@ -116,7 +116,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-back-link')
                     .append(
-                        $('<a href="/#catalog/apps" target="_parent">').append(
+                        $('<a href="/#catalog/apps" target="_top">').append(
                             '<i class="fa fa-chevron-left"></i> back to the Catalog'
                         )
                     )
@@ -175,7 +175,7 @@ define([
                     $li.append(
                         '<a href="/#catalog/modules/' +
                             mod.module_name +
-                            '" target="_parent">' +
+                            '" target="_top">' +
                             mod.module_name +
                             '</a>'
                     );
@@ -189,7 +189,7 @@ define([
                         $li.append(
                             '<a href="/#people/' +
                                 mod.owners[owner] +
-                                '" target="_parent">' +
+                                '" target="_top">' +
                                 mod.owners[owner] +
                                 '</a>'
                         );
@@ -327,7 +327,7 @@ define([
                 $row.append(
                     '<strong><a href="/#catalog/modules/' +
                         info.module_name_lc +
-                        '" target="_parent">' +
+                        '" target="_top">' +
                         info.module_name_lc +
                         '</a></strong> - '
                 );
@@ -344,7 +344,7 @@ define([
                     .append(
                         '<a href="/#catalog/register/' +
                             info.registration_id +
-                            '" target="_parent">' +
+                            '" target="_top">' +
                             info.registration_id +
                             '</a>'
                     )

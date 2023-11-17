@@ -68,7 +68,7 @@ define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWi
                     width +
                     '">Registration ID</td><td><a href="/#catalog/register/' +
                     self.registration_id +
-                    '" target="_parent">' +
+                    '" target="_top">' +
                     self.registration_id +
                     '</a></td></tr>'
             );
@@ -188,7 +188,7 @@ define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWi
                     self.$registration_state_td.append(
                         'Successfully registered <a href="/#catalog/modules/' +
                             build_info.module_name_lc +
-                            '" target="_parent">' +
+                            '" target="_top">' +
                             build_info.module_name_lc +
                             '</a> '
                     );

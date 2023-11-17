@@ -298,8 +298,8 @@ define([
         },
 
         addUserControls: function () {
-            var $verR = $('<a href="/#catalog/apps/release" target="_parent">').append('Released Apps');
-            var $verB = $('<a href="/#catalog/apps/beta" target="_parent">').append('Beta Apps');
+            var $verR = $('<a href="/#catalog/apps/release" target="_top">').append('Released Apps');
+            var $verB = $('<a href="/#catalog/apps/beta" target="_top">').append('Beta Apps');
 
             var $version = $('<li>')
                 .addClass('dropdown')
@@ -321,9 +321,9 @@ define([
         },
 
         addDeveloperControls: function () {
-            var $verR = $('<a href="/#catalog/apps/release" target="_parent">').append('Released Apps');
-            var $verB = $('<a href="/#catalog/apps/beta" target="_parent">').append('Beta Apps');
-            var $verD = $('<a href="/#catalog/apps/dev" target="_parent">').append('Apps in Development');
+            var $verR = $('<a href="/#catalog/apps/release" target="_top">').append('Released Apps');
+            var $verB = $('<a href="/#catalog/apps/beta" target="_top">').append('Beta Apps');
+            var $verD = $('<a href="/#catalog/apps/dev" target="_top">').append('Apps in Development');
 
             var $version = $('<li>')
                 .addClass('dropdown')
@@ -340,16 +340,16 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_parent">').append('Status'));
+            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_top">').append('Status'));
 
             var $registerLink = $('<li>').append(
-                $('<a href="/#catalog/register" target="_parent">').append(
+                $('<a href="/#catalog/register" target="_top">').append(
                     '<i class="fa fa-plus-circle"></i> Add Module'
                 )
             );
 
             var $indexLink = $('<li>').append(
-                $('<a href="/#catalog" target="_parent">').append('<i class="fa fa-bars"></i> Index')
+                $('<a href="/#catalog" target="_top">').append('<i class="fa fa-bars"></i> Index')
             );
             var $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
@@ -906,7 +906,7 @@ define([
                         $('<div>')
                             .css({ color: '#777' })
                             .append(
-                                $('<h4>').append('<a href="/#catalog/modules/' + m + '" target="_parent">' + m + '</a>')
+                                $('<h4>').append('<a href="/#catalog/modules/' + m + '" target="_top">' + m + '</a>')
                             )
                     );
                     $section.append($currentModuleDiv);
@@ -934,7 +934,7 @@ define([
                     $('<div>')
                         .css({ color: '#777' })
                         .append(
-                            $('<h4>').append('<a href="/#people/' + devs[k] + '" target="_parent">' + devs[k] + '</a>')
+                            $('<h4>').append('<a href="/#people/' + devs[k] + '" target="_top">' + devs[k] + '</a>')
                         )
                 );
                 $section.append($authorDiv);
@@ -1062,7 +1062,7 @@ define([
                         .css({ color: '#777' })
                         .append(
                             $('<h4>').append(
-                                $(`<a href="/#spec/${url_prefix}/${type}" target="_parent">`).append(type)
+                                $(`<a href="/#spec/${url_prefix}/${type}" target="_top">`).append(type)
                             )
                         )
                 );
