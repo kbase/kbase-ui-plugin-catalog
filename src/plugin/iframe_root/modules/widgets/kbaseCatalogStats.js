@@ -11,8 +11,7 @@ define([
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap',
     'datatables_bootstrap'
-], function ($, Promise, Catalog, NarrativeJobService, CatalogUtil, DynamicTable, DynamicService) {
-    'use strict';
+], ($, Promise, Catalog, NarrativeJobService, CatalogUtil, DynamicTable, DynamicService) => {
     return $.KBWidget({
         name: 'KBaseCatalogStats',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -704,12 +703,7 @@ define([
             $mainPanel.append(
                 $('<div>')
                     .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
-                        )
-                    )
-            );
+                    .append(this.runtime.$backToCatalogIndex()));
 
             var $basicStatsDiv = $('<div>');
             $mainPanel.append($basicStatsDiv);
@@ -776,13 +770,8 @@ define([
                         var meanQueueTime = s.total_queue_time / s.number_of_calls;
 
                         var stat = {
-                            id: '<a href="/#catalog/apps/' + s.full_app_id + '/dev" target="_top">' + id + '</a>',
-                            module:
-                                '<a href="/#catalog/modules/' +
-                                s.module_name +
-                                '" target="_top">' +
-                                s.module_name +
-                                '</a>',
+                            id: self.runtime.$makeKBaseUILink(`catalog/apps/${s.full_app_id}`, id).get(0).outerHTML,
+                            module: self.runtime.$makeKBaseUILink(`catalog/modules/${s.module_name}`, s.module_name).get(0).outerHTML,
                             nCalls: s.number_of_calls,
                             nErrors: s.number_of_errors,
                             success: successPercent.toPrecision(3),
@@ -839,8 +828,8 @@ define([
                             module = s.app.split('/')[0];
                             id = s.app.split('/')[1];
                         }
-                        id = '<a href="/#catalog/apps/' + module + '/' + id + '/dev" target="_top">' + id + '</a>';
-                        module = '<a href="/#catalog/modules/' + module + '" target="_top">' + module + '</a>';
+                        id = self.runtime.$makeKBaseUILink(`catalog/apps/${module}/${id}`, id).get(0).outerHTML;
+                        module = self.runtime.$makeKBaseUILink(`catalog/modules/${module}`,module).get(0).outerHTML;
                     } else {
                         if (s.func) {
                             id = 'API Call: ' + s.func;
@@ -858,7 +847,7 @@ define([
                         id: id,
                         module: module,
                         n: s.n,
-                        u: '<a href="/#people/' + s.user + '" target="_top">' + s.user + '</a>'
+                        u: self.runtime.$europaUILink(`people/${s.user}`, s.user).get(0).outerHTML
                     };
                     self.adminStats.push(stat);
                 }
@@ -894,7 +883,8 @@ define([
 
                     jobs.forEach(function (job) {
                         // various tidying up and re-formatting of the results which came back from the service.
-                        job.user_id = '<a href="/#people/' + job.user + '" target="_blank">' + job.user + '</a>';
+                        job.user_id = self.$europaUILink(`people/${job.user}`, job.user).get(0).outerHTML;
+                        // '<a href="/#people/' + job.user + '" target="_blank">' + job.user + '</a>';
 
                         if (job.app_id) {
                             var appModule = job.app_id.split('/');

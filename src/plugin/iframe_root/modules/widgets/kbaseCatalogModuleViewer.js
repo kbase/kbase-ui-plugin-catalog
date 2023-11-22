@@ -10,8 +10,15 @@ define([
     './kbaseCatalogRegistration',
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], function ($, Promise, NarrativeMethodStore, Catalog, CatalogUtil, AppCard, FunctionCard) {
-    'use strict';
+], (
+    $,
+    Promise,
+    NarrativeMethodStore,
+    Catalog,
+    CatalogUtil,
+    AppCard,
+    FunctionCard
+) => {
     $.KBWidget({
         name: 'KBaseCatalogModuleViewer',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -174,7 +181,9 @@ define([
                 if (k > 0) {
                     $owners.append(', ');
                 }
-                $owners.append('<a href="/#people/' + username + '" target="_top">' + username + '</a>');
+
+                $owners.append(self.runtime.$europaUILink(`people/${username}`, username,));
+
                 if (self.runtime.service('session').getUsername() === info.owners[k]) {
                     isOwner = true;
                 }
@@ -222,10 +231,9 @@ define([
                         'Development Version',
                         $('<div>')
                             .append(
-                                '<a href="/#catalog/status/' +
-                                    info.module_name +
-                                    '" target="_top">View recent registrations</a><br><br>'
-                            )
+                                self.runtime.$makeKBaseUILink(
+                                    `catalog/status/${info.module_name}`,
+                                    'View recent registrations'))
                             .append(self.renderVersion('dev', info.dev))
                     )
                 );
@@ -291,26 +299,10 @@ define([
                         var id = version.narrative_methods[i];
                         if (tag) {
                             $l.append(
-                                '<li><a href="/#catalog/apps/' +
-                                    this.moduleDetails.info.module_name +
-                                    '/' +
-                                    id +
-                                    '/' +
-                                    tag +
-                                    '" target="_top">' +
-                                    id +
-                                    '</a></li>'
-                            );
+                                $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}/${tag}`, id)));
                         } else {
                             $l.append(
-                                '<li><a href="/#catalog/apps/' +
-                                    this.moduleDetails.info.module_name +
-                                    '/' +
-                                    id +
-                                    '" target="_top">' +
-                                    id +
-                                    '</a></li>'
-                            );
+                                $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}`, id)));
                         }
                         /*$l.append('<li><a href="#narrativestore/method/'+this.moduleDetails.info.module_name+'/'+id+
                             '">'+id+'</a></li>');*/
@@ -331,16 +323,7 @@ define([
                     for (i = 0; i < version.local_functions.length; i++) {
                         id = version.local_functions[i];
                         $l.append(
-                            '<li><a href="/#catalog/functions/' +
-                                this.moduleDetails.info.module_name +
-                                '/' +
-                                id +
-                                '/' +
-                                version.git_commit_hash +
-                                '" target="_top">' +
-                                id +
-                                '</a></li>'
-                        );
+                            $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/functions/${this.moduleDetails.info.module_name}/${id}/${version.git_commit_hash}`, id)));
                     }
                     $verDiv.append($l);
                 } else {
@@ -385,11 +368,9 @@ define([
                     })
             );
 
-            $adminContent.append(
-                '<br><a href="/#catalog/status/' +
-                    self.moduleDetails.info.module_name +
-                    '" target="_top">View recent registrations</a><br>'
-            );
+            $adminContent.append('<br>');
+
+            $adminContent.append(self.runtime.$makeKBaseUILink(`catalog/status/${self.moduleDetails.info.module_name}`, 'View recent registrations'));
 
             $adminContent.append('<br><b>Module state information:</b>');
             var $stateTable = $(
@@ -546,11 +527,7 @@ define([
             $mainPanel.append(
                 $('<div>')
                     .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog/apps"  target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog'
-                        )
-                    )
+                    .append(this.runtime.$backToAppCatalog())
             );
 
             $mainPanel
@@ -756,7 +733,8 @@ define([
                             favoritesCallbackParams: { catalog: self.catalog, browserWidget: self },
                             isLoggedIn: self.runtime.service('session').isLoggedIn(),
                             showReleaseTagLabels: true,
-                            linkTag: info_list[k].git_commit_hash
+                            linkTag: info_list[k].git_commit_hash,
+                            runtime: self.runtime
                         });
                         self.appList.push(m);
                         if (m.info.module_name) {
@@ -775,7 +753,7 @@ define([
                             .list_local_functions({ release_tag: tag, module_names: [self.module_name.toLowerCase()] })
                             .then(function (mods) {
                                 for (var m = 0; m < mods.length; m++) {
-                                    var f = new FunctionCard(mods[m], self.runtime.service('session').isLoggedIn());
+                                    var f = new FunctionCard(mods[m], self.runtime);
                                     self.functionList.push(f);
                                 }
                             });

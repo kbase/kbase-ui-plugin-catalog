@@ -153,15 +153,7 @@ define([
             var $specPanel = $('<div>').css('margin', '1em');
             var $infoPanel = $('<div>').css('margin', '1em');
 
-            $mainPanel.append(
-                $('<div>')
-                    .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog/functions" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Function Catalog'
-                        )
-                    )
-            );
+            $mainPanel.append(this.runtime.$backToFunctionCatalog());
 
             $mainPanel
                 .append($header)
@@ -243,9 +235,7 @@ define([
                 $('<div>')
                     .addClass('kbcb-app-page-module')
                     .append(
-                        $('<a href="/#catalog/modules/' + info.module_name + '" target="_top">').append(
-                            info.module_name
-                        )
+                        this.runtime.$catalogLink(`modules/${info.module_name}`, info.module_name)
                     )
             );
 
@@ -258,12 +248,7 @@ define([
                         $authorDiv.append(', ');
                     }
                     $authorDiv.append(
-                        $('<a href="/#people/' + info.authors[k] + '" target="_top">')
-                            .append(info.authors[k])
-                            .on('click', function (event) {
-                                // have to stop propagation so we don't go to the app page first
-                                event.stopPropagation();
-                            })
+                        this.runtime.$europaUILink(`people/${info.authors[k]}`, info.authors[k])
                     );
                 }
                 $titleSpan.append($authorDiv);

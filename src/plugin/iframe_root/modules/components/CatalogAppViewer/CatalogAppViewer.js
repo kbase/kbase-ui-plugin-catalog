@@ -3,6 +3,10 @@ define([
     'htm',
     'dompurify',
     'jquery',
+    'components/KBaseUILink',
+    'components/CatalogLink',
+    'components/EuropaUILink',
+    'components/BackToCatalogLink',
 
     // for effect
     'css!./CatalogAppViewer.css',
@@ -11,7 +15,11 @@ define([
     preact,
     htm,
     DOMPurify,
-    $
+    jquery,
+    KBaseUILink,
+    CatalogLink,
+    EuropaUILink,
+    BackToCatalogLink
 ) => {
     const {h, Component} = preact;
     const html = htm.bind(h);
@@ -70,9 +78,8 @@ define([
                 return html`<div>n/a</div>`;
             }
             const authors =  interpolate(appFullInfo.authors.map((author) => {
-                return html`
-                    <a href="/#people/${author}" target="_top">${author}</a>
-                `;
+                const path = `people/${author}`;
+                return html`<${KBaseUILink} runtime=${this.props.runtime} path=${path}/>`;
             }), html`<span>, </span>`);
             return html`<span>by ${authors}</span>`;
         }
@@ -83,7 +90,6 @@ define([
             return html`
                 <div >
                     ${appFullInfo.name}
-
                 </div>
             `;
         }
@@ -96,9 +102,11 @@ define([
 
             return html`
                 <div>
-                    <a href="/#catalog/modules/${moduleDetails.info.module_name}" target="_top">
+                    <${CatalogLink} runtime=${this.props.runtime} path="modules/${moduleDetails.info.module_name}">
                         ${moduleDetails.info.module_name}
-                    </a> v${moduleDetails.info.version}
+                    </> 
+                    ${' '}
+                    v${moduleDetails.info.version}
                 </div>
             `;
         }
@@ -249,8 +257,8 @@ define([
         }
 
         showScreenshotsModal(screenshotNumber) {
-            $('#carousel-screenshots').carousel(screenshotNumber);
-            $('#screenshots-modal').modal({
+            jquery('#carousel-screenshots').carousel(screenshotNumber);
+            jquery('#screenshots-modal').modal({
                 show: true
             });
         }
@@ -342,7 +350,7 @@ define([
                     if (parameter.text_options && parameter.text_options.valid_ws_types) {
                         return parameter.text_options.valid_ws_types.map((typeName) => {
                             const url_prefix = typeName.includes('.') ? 'type' : 'module';
-                            return html`<a href="/#spec/${url_prefix}/${typeName}" target="_top">${typeName}</a>`;
+                            return html`<${EuropaUILink} runtime=${this.props.runtime} path="spec/${url_prefix}/${typeName}">${typeName} </>`;
                         });
                     }
                     return [];
@@ -492,47 +500,41 @@ define([
             `;
         }
 
-
-
         render() {
             return html`
-            <div className="CatalogAppViewer">
-                <div className="-linkback">
-                    <a href="/#catalog/apps" target="_top">
-                        <i class="fa fa-chevron-left" /> back to the Catalog
-                    </a>
+                <div className="CatalogAppViewer">
+                <${BackToCatalogLink} runtime=${this.props.runtime} />
+                <div className="-header">
+                        <div className="-title-bar">
+                            <div className="-logo">
+                                ${this.renderLogo()}
+                            </div>
+                            <div className="-title-area">
+                                <div className="-title">${this.renderTitle()}</div>
+                                <div className="-module">${this.renderModule()}</div>
+                                <div className="-authors">${this.renderAuthors()}</div>
+                            </div>
+                        </div>
+                        <div className="-stats-bar">
+                            ${this.renderStatsBar()}
+                        </div>
                 </div>
-               <div className="-header">
-                    <div className="-title-bar">
-                        <div className="-logo">
-                            ${this.renderLogo()}
+                <div className="-section -subheader">
+                    ${this.renderSubtitle()}
+                    ${this.renderScreenshots()}
+                </div>
+                <div className="-body">
+                        <div className="-section">
+                            ${this.renderDescription()}
                         </div>
-                        <div className="-title-area">
-                            <div className="-title">${this.renderTitle()}</div>
-                            <div className="-module">${this.renderModule()}</div>
-                            <div className="-authors">${this.renderAuthors()}</div>
+                        <div className="-section">
+                            ${this.renderParameters()}
                         </div>
-                    </div>
-                    <div className="-stats-bar">
-                        ${this.renderStatsBar()}
-                    </div>
-               </div>
-               <div className="-section -subheader">
-                ${this.renderSubtitle()}
-                ${this.renderScreenshots()}
-               </div>
-               <div className="-body">
-                    <div className="-section">
-                        ${this.renderDescription()}
-                    </div>
-                    <div className="-section">
-                        ${this.renderParameters()}
-                    </div>
-                    ${this.renderPublicationsSection()}
-                    ${this.renderKBaseContributorsSection()}
-                    ${this.renderAppInfo()}
-               </div>
-            </div>
+                        ${this.renderPublicationsSection()}
+                        ${this.renderKBaseContributorsSection()}
+                        ${this.renderAppInfo()}
+                </div>
+                </div>
             `;
         }
     }

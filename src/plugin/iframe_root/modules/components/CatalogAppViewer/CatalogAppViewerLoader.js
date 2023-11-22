@@ -319,7 +319,12 @@ define([
         renderSuccess(value) {
             const nms_url = this.props.runtime.config('services.narrative_method_store.url');
             const nms_image_url = this.props.runtime.config('services.narrative_method_store.image_url');
-            return html`<${CatalogAppViewer} ...${value} nms_url=${nms_url} nms_image_url=${nms_image_url} toggleFavorite=${this.toggleFavorite.bind(this)}/>`;
+            return html`<${CatalogAppViewer} 
+                ...${value} 
+                runtime=${this.props.runtime}
+                nms_url=${nms_url} 
+                nms_image_url=${nms_image_url} 
+                toggleFavorite=${this.toggleFavorite.bind(this)} />`;
         }
 
         renderState() {

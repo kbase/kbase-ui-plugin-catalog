@@ -6,8 +6,7 @@ define([
     'datatables',
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], function ($, Promise, Workspace, CatalogUtil) {
-    'use strict';
+], ($, Promise, Workspace, CatalogUtil) => {
     $.KBWidget({
         name: 'KBaseCatalogTypeBrowser',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -142,13 +141,7 @@ define([
 
             $mainPanel.append(
                 $('<div>')
-                    .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
-                        )
-                    )
-            );
+                    .append(this.runtime.$backToAppCatalog()));
 
             var $typeListPanel = $('<div>');
             $mainPanel.append($typeListPanel);
@@ -186,32 +179,18 @@ define([
                                             if (o >= 1) {
                                                 owners += ', ';
                                             }
-                                            owners +=
-                                                '<a href="/#people/' +
-                                                info.owners[o] +
-                                                '" target="_top">' +
-                                                info.owners[o] +
-                                                '</a>';
+                                            owners += self.runtime.$europaUILink(`people/${info.owners[o]}`, info.owners[o]).get(0).outerHTML
                                         }
+                                        const moduleLink = self.runtime.$europaUILink(`spec/module/${modName}`, modName).get(0).outerHTML;
+                                        const typeLink = self.runtime.$europaUILink(`spec/type/${typeName}`, typeName).get(0).outerHTML;
                                         var typeInfo = {
                                             module: modName,
                                             type: typeName,
-                                            type_link:
-                                                '<a href="/#spec/module/' +
-                                                modName +
-                                                '" target="_top">' +
-                                                modName +
-                                                '</a>.<a href="/#spec/type/' +
-                                                modName +
-                                                '.' +
-                                                typeName +
-                                                '" target="_top">' +
-                                                typeName +
-                                                '</a>',
-                                            ver: ver,
+                                            type_link: `${moduleLink}.${typeLink}`,
+                                            ver,
                                             timestamp: '<!--' + info.ver + '-->' + new Date(info.ver).toLocaleString(),
                                             owners_link: owners,
-                                            released: released
+                                            released
                                         };
                                         self.typeList.push(typeInfo);
                                     }

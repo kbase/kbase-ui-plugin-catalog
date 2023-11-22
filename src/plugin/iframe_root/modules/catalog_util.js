@@ -1,10 +1,8 @@
 define([
     'jquery'
-], function (
+], (
     $
-) {
-    'use strict';
-
+) => {
     function CatalogUtil() {
 
         // edited from: http://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
@@ -94,12 +92,11 @@ define([
         };
 
 
-        this.initLoadingPanel= function() {
-            var $loadingPanel = $('<div>').addClass('kbcb-loading-panel-div');
+        this.initLoadingPanel= () => {
+            const $loadingPanel = $('<div>').addClass('kbcb-loading-panel-div');
             $loadingPanel.append($('<i>').addClass('fa fa-spinner fa-2x fa-spin'));
             return $loadingPanel;
         };
-
 
 
         this.monthLookup = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

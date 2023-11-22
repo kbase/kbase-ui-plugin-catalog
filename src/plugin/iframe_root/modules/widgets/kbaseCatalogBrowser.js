@@ -4,6 +4,7 @@ define([
     'kb_service/client/narrativeMethodStore',
     'kb_service/client/catalog',
     'kb_common/jsonRpc/genericClient',
+    'kbaseUI/utils',
     '../catalog_util',
     '../app_card',
     'yaml!../data/categories.yml',
@@ -11,9 +12,7 @@ define([
     // for effect
     'kbaseUI/widget/legacy/authenticatedWidget',
     'bootstrap'
-], function ($, Promise, NarrativeMethodStore, Catalog, GenericClient, CatalogUtil, AppCard, categoriesConfig) {
-    'use strict';
-
+], ($, Promise, NarrativeMethodStore, Catalog, GenericClient, utils, CatalogUtil, AppCard, categoriesConfig) => {
     $.KBWidget({
         name: 'KBaseCatalogBrowser',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -298,8 +297,10 @@ define([
         },
 
         addUserControls: function () {
-            var $verR = $('<a href="/#catalog/apps/release" target="_top">').append('Released Apps');
-            var $verB = $('<a href="/#catalog/apps/beta" target="_top">').append('Beta Apps');
+            const $verR = this.runtime.$catalogLink('apps/release', 'Released Apps');
+            const $verB = this.runtime.$catalogLink('apps/beta', 'Beta Apps');
+            // var $verR = $('<a href="/foo#catalog/apps/release" target="_parent">').append('Released Apps');
+            // var $verB = $('<a href="/foo#catalog/apps/beta" target="_parent">').append('Beta Apps');
 
             var $version = $('<li>')
                 .addClass('dropdown')
@@ -321,9 +322,9 @@ define([
         },
 
         addDeveloperControls: function () {
-            var $verR = $('<a href="/#catalog/apps/release" target="_top">').append('Released Apps');
-            var $verB = $('<a href="/#catalog/apps/beta" target="_top">').append('Beta Apps');
-            var $verD = $('<a href="/#catalog/apps/dev" target="_top">').append('Apps in Development');
+            const $verR = this.runtime.$catalogLink('apps/release', 'Released Apps');
+            const $verB = this.runtime.$catalogLink('apps/beta', 'Beta Apps');
+            const $verD = this.runtime.$catalogLink('apps/dev', 'Apps in Development');
 
             var $version = $('<li>')
                 .addClass('dropdown')
@@ -340,16 +341,12 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_top">').append('Status'));
+            var $statusLink = $('<li>').append(this.runtime.$makeKBaseUILink("catalog/status", 'Status'));
 
-            var $registerLink = $('<li>').append(
-                $('<a href="/#catalog/register" target="_top">').append(
-                    '<i class="fa fa-plus-circle"></i> Add Module'
-                )
-            );
+            var $registerLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
 
             var $indexLink = $('<li>').append(
-                $('<a href="/#catalog" target="_top">').append('<i class="fa fa-bars"></i> Index')
+                $(this.runtime.$makeKBaseUILink('catalog', 'Index', {icon: 'bars'}))
             );
             var $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
@@ -700,6 +697,7 @@ define([
                 //    isLoggedIn: true | false
 
                 var m = new AppCard({
+                    runtime: this.runtime,
                     legacy: false,
                     app: this.apps[k],
                     module: this.moduleLookup[this.apps[k]['module_name']],
@@ -729,6 +727,7 @@ define([
                 }
                 if (this.util.skipApp(this.legacyApps[k].categories)) continue;
                 var a = new AppCard({
+                    runtime: this.runtime,
                     legacy: true,
                     app: this.legacyApps[k],
                     nms_base_url: this.nms_base_url,
@@ -906,7 +905,8 @@ define([
                         $('<div>')
                             .css({ color: '#777' })
                             .append(
-                                $('<h4>').append('<a href="/#catalog/modules/' + m + '" target="_top">' + m + '</a>')
+                                $('<h4>')
+                                    .append(this.runtime.$makeKBaseUILink(`catalog/modules/${m}`, m))
                             )
                     );
                     $section.append($currentModuleDiv);
@@ -934,7 +934,8 @@ define([
                     $('<div>')
                         .css({ color: '#777' })
                         .append(
-                            $('<h4>').append('<a href="/#people/' + devs[k] + '" target="_top">' + devs[k] + '</a>')
+                            $('<h4>')
+                                .append(this.runtime.$europaUILink(`people/${devs[k]}`, devs[k]))
                         )
                 );
                 $section.append($authorDiv);
@@ -1062,7 +1063,7 @@ define([
                         .css({ color: '#777' })
                         .append(
                             $('<h4>').append(
-                                $(`<a href="/#spec/${url_prefix}/${type}" target="_top">`).append(type)
+                                this.runtime.$europaUILink(`spec/${url_prefix}/${type}`, type)
                             )
                         )
                 );
@@ -1094,7 +1095,9 @@ define([
                     }
                 }
             });
-        }, renderbyInputTypes: function () {
+        },
+
+        renderbyInputTypes: function () {
             // get and sort the type list
             const types = Object.keys(this.inputTypes).sort();
             const type_field = 'input_types';

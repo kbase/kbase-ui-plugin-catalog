@@ -7,10 +7,12 @@ define([
     '../catalog_util',
     'datatables',
     'kb_widget/legacy/authenticatedWidget',
+
+    // For effect
     'bootstrap',
-    'datatables_bootstrap'
-], function ($, Promise, NarrativeMethodStore, Catalog, ServiceWizard, CatalogUtil) {
-    'use strict';
+    'datatables_bootstrap',
+    'css!./kbaseCatalogService.css'
+], ($, Promise, NarrativeMethodStore, Catalog, ServiceWizard, CatalogUtil) => {
     $.KBWidget({
         name: 'KBaseCatalogService',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -102,26 +104,19 @@ define([
                 .addClass('btn')
                 .append('start');
             newEntry['module_name'] = entry['module_name'];
-            newEntry['module_name_link'] =
-                '<a href="/#catalog/modules/' +
-                entry['module_name'] +
-                '" target="_top">' +
-                entry['module_name'] +
-                '</a>';
+            newEntry['module_name_link'] = this.runtime.$makeKBaseUILink(`catalog/modules/${entry['module_name']}`, entry['module_name']).get(0).outerHTML;
             newEntry['version'] = entry['version'];
             newEntry['git_commit_hash'] = entry['git_commit_hash'];
             return newEntry;
         },
 
         render: function () {
-            var self = this;
+            this.renderServiceStatusList(this.status_data);
 
-            self.renderServiceStatusList(self.status_data);
-
-            self.renderServiceModuleAvailableList('Latest Released Versions', self.release_versions, true);
-            self.renderServiceModuleAvailableList('All Released Versions', self.all_versions);
-            self.renderServiceModuleAvailableList('Beta Versions', self.beta_versions);
-            self.renderServiceModuleAvailableList('Dev Versions', self.dev_versions);
+            this.renderServiceModuleAvailableList('Latest Released Versions', this.release_versions, true);
+            this.renderServiceModuleAvailableList('All Released Versions', this.all_versions);
+            this.renderServiceModuleAvailableList('Beta Versions', this.beta_versions);
+            this.renderServiceModuleAvailableList('Dev Versions', this.dev_versions);
         },
 
         renderServiceStatusList: function (data) {
@@ -154,19 +149,21 @@ define([
                 iDisplayLength: 100,
                 sDom: sDom,
                 aaSorting: [[2, 'dsc'], [1, 'asc']],
+                autoWidth: false,
                 columns: [
-                    { sTitle: 'Module', data: 'module_name' },
-                    { sTitle: 'Version', data: 'version' },
-                    { sTitle: 'R', data: 'release_tag' },
-                    { sTitle: 'B', data: 'beta_tag' },
-                    { sTitle: 'D', data: 'dev_tag' },
-                    { sTitle: 'Status', data: 'status' },
-                    { sTitle: 'Up?', data: 'up' },
-                    { sTitle: 'Health', data: 'health' },
-                    { sTitle: 'GitHash', data: 'git_commit_hash' },
-                    { sTitle: 'url', data: 'url' },
+                    { sTitle: 'Module', data: 'module_name', width: '20%' },
+                    { sTitle: 'Version', data: 'version', width: '3rem' },
+                    { sTitle: 'R', data: 'release_tag', width: '3rem' },
+                    { sTitle: 'B', data: 'beta_tag', width: '3rem' },
+                    { sTitle: 'D', data: 'dev_tag', width: '3rem' },
+                    { sTitle: 'Status', data: 'status', width: '3rem' },
+                    { sTitle: 'Up?', data: 'up', width: '3rem' },
+                    { sTitle: 'Health', data: 'health', width: '3rem' },
+                    { sTitle: 'GitHash', data: 'git_commit_hash', width: '3rem' },
+                    { sTitle: 'url', data: 'url', width: '20%' },
                     {
                         sTitle: 'Actions',
+                        width: '4rem',
                         bSortable: false,
                         mRender: function () {
                             return '';
@@ -176,20 +173,14 @@ define([
                 data: data,
                 fnCreatedRow: function (nRow, aData) {
                     if (!aData['module_name'].startsWith('!')) {
-                        $('td:eq(0)', nRow).html(
-                            '<a href="/#catalog/modules/' +
-                                aData['module_name'] +
-                                '" target="_top">' +
-                                aData['module_name'] +
-                                '</a>'
-                        );
+                        $('td:eq(0)', nRow).html(self.runtime.$makeKBaseUILink(`catalog/modules/${aData['module_name']}`, aData['module_name']));
                     }
                     if (aData['git_commit_hash'] && aData['git_commit_hash'].length == 40) {
                         $('td:eq(8)', nRow).html(aData['git_commit_hash'].substring(0, 7));
                     }
 
                     $('td:eq(9)', nRow).html(
-                        '<div style="width:250px"><a href="' + aData['url'] + '">' + aData['url'] + '</a></div>'
+                        '<div style="overflow-x: hidden; text-overflow: ellipsis; white-space: nowrap;"><a href="' + aData['url'] + '">' + aData['url'] + '</a></div>'
                     );
 
                     if (aData['health'] === 'healthy') {
@@ -200,7 +191,7 @@ define([
 
                     if (aData['version'] != 'unknown') {
                         if (aData['up']) {
-                            var $span = $('<span>');
+                            var $span = $('<div>').css('white-space', 'nowrap');
                             var $stopBtn = $('<button>')
                                 .addClass('btn btn-default')
                                 .append('stop')
@@ -545,17 +536,9 @@ define([
 
         initMainPanel: function () {
             var self = this;
-            var $mainPanel = $('<div>').addClass('container-fluid');
+            var $mainPanel = $('<div>').addClass('KBaseCatalogService container-fluid');
 
-            $mainPanel.append(
-                $('<div>')
-                    .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
-                        )
-                    )
-            );
+            $mainPanel.append(this.runtime.$backToCatalogIndex());
 
             $mainPanel.append($('<h3>').append('Catalog Service Status:'));
 
