@@ -1,13 +1,15 @@
 define([
     'preact',
     'htm',
+    'components/KBaseUILink',
 
     // for effect
     'css!./CatalogIndex.css',
     'bootstrap'
 ], (
     preact,
-    htm
+    htm,
+    KBaseUILink
 ) => {
     const {h, Component} = preact;
     const html = htm.bind(h);
@@ -31,7 +33,7 @@ define([
 
         renderIndexURL({url, path, title}) {
             if (path) {
-                return html`<a href="/#catalog/${path}" target="_top">${title}</a>`;
+                return html`<${KBaseUILink} runtime=${this.props.runtime} path=${`catalog/${path}`}>${title}</>`;
             }
             return html`<a href="${url}" target="_blank">${title} <span className="fa fa-link" /></a>`;
         }

@@ -79,6 +79,7 @@ define([
                 return this.renderError(this.state.message);
             case 'SUCCESS':
                 return html`<${CatalogIndex} 
+                    runtime=${this.props.runtime}
                     index=${catalogIndex.index} 
                     isAdmin=${this.state.isAdmin} 
                     isDeveloper=${this.state.isDeveloper} 

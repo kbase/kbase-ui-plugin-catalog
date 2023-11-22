@@ -3,8 +3,8 @@ define([
     'kb_common/dom',
     'kb_common/html',
     'kb_widget/widgetSet'
-], function (Promise, DOM, html, WidgetSet) {
-    'use strict';
+], (Promise, DOM, html, WidgetSet) => {
+
     function widget(config) {
         var mount, container, runtime = config.runtime,
             widgetSet = WidgetSet.make({runtime: runtime}),
@@ -13,9 +13,8 @@ define([
         // Mini widget manager
         // TODO: the jquery name should be stored in the widget definition not here.
         function render() {
-
             // the catalog home page is simple the catalog browser
-            var div=html.tag('div');
+            const div=html.tag('div');
             return div({
                 id: widgetSet.addWidget('catalog_stats_widget',
                     {
@@ -35,7 +34,7 @@ define([
             });
         }
         function attach(node) {
-            runtime.send('ui', 'setTitle', 'App Catalog');
+            runtime.send('ui', 'setTitle', 'Job Run Statistics');
             return Promise.try(function () {
                 mount = node;
                 container = mount.appendChild(DOM.createElement('div'));

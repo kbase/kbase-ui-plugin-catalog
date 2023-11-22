@@ -592,15 +592,7 @@ define([
             var $mainPanel = $('<div>').addClass('container-fluid');
 
             if (!self.options.dontShowBackButton) {
-                $mainPanel.append(
-                    $('<div>')
-                        .addClass('kbcb-back-link')
-                        .append(
-                            $('<a href=\'/#catalog\' target="_top">').append(
-                                '<i class=\'fa fa-chevron-left\'></i> back to the Catalog Index'
-                            )
-                        )
-                );
+                $mainPanel.append(this.runtime.$backToCatalogIndex());
             }
 
             var $basicStatsDiv = $('<div>');

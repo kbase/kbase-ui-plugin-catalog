@@ -1,27 +1,7 @@
-define(['jquery'], function ($) {
-    'use strict';
-
-    // favorites callback should accept:
-    //
-    //  favoritesCallback(this.info)
-    //    info =
-    //      id:
-    //      module_name:
-    //      ...
-    //
-
-    //params = {
-    //    legacy : true | false // indicates if this is a legacy App or SDK App
-    //    app:  { .. }  // app info returned (for now) from NMS
-    //    module: { .. }  // module info returned for SDK methods
-    //    favoritesCallback: function () // function called when favorites button is clicked
-    //    isLoggedIn: true | false
-    //    showReleaseTagLabels: true | false
-    //    linkTag: dev | beta | release | commit_hash
-    //}
-
+define(['jquery'], ($) => {
     function AppCard(params) {
         this.$divs = [];
+        this.runtime = params.runtime;
         this.info = params.app;
         this.module = params.module;
         this.legacy = params.legacy;
@@ -50,13 +30,13 @@ define(['jquery'], function ($) {
         }
 
         this.show = function () {
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k].show();
             }
         };
 
         this.hide = function () {
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k].hide();
             }
         };
@@ -65,12 +45,11 @@ define(['jquery'], function ($) {
         this.getNewCardDiv = function () {
             this.cardsAdded += 1;
             if (this.$divs.length < this.cardsAdded) {
-                var $newCard = this._renderAppCard();
+                const $newCard = this._renderAppCard();
                 this.$divs.push($newCard);
                 return $newCard;
-            } else {
-                return this.$divs[this.cardsAdded - 1];
             }
+            return this.$divs[this.cardsAdded - 1];
         };
 
         /* assumes the cards have been detached from DOM*/
@@ -91,7 +70,7 @@ define(['jquery'], function ($) {
         /* timestamp => the time at which this was favorited, optional */
         this.turnOnStar = function (timestamp) {
             this.onStar = true;
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k]
                     .find('.kbcb-star')
                     .removeClass('kbcb-star-nonfavorite')
@@ -103,7 +82,7 @@ define(['jquery'], function ($) {
         };
         this.turnOffStar = function () {
             this.onStar = false;
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k]
                     .find('.kbcb-star')
                     .removeClass('kbcb-star-favorite')
@@ -120,7 +99,7 @@ define(['jquery'], function ($) {
 
         this.deactivateStar = function () {
             this.deactivatedStar = true;
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k]
                     .find('.kbcb-star')
                     .removeClass('kbcb-star-favorite')
@@ -230,38 +209,28 @@ define(['jquery'], function ($) {
                 $titleSpan.append(
                     $('<div>')
                         .addClass('kbcb-app-card-module')
-                        .append(
-                            $('<a href="/#catalog/modules/' + module.module_name + '" target="_top">')
-                                .append(module.module_name)
-                                .on('click', function (event) {
-                                    // have to stop propagation so we don't go to the app page first
-                                    event.stopPropagation();
-                                })
-                        )
-                    //.append(' v'+module.version)
+                        .append(this.runtime.$makeKBaseUILink(
+                            `catalog/modules/${module.module_name}`,
+                            module.module_name,
+                            {stopPropagation: true}))
                 );
             }
 
             if (!legacy) {
                 if (info.authors.length > 0) {
-                    var $authorDiv = $('<div>')
+                    const $authorDiv = $('<div>')
                         .addClass('kbcb-app-card-authors')
                         .append('by ');
-                    for (var k = 0; k < info.authors.length; k++) {
+                    for (let k = 0; k < info.authors.length; k++) {
                         if (k >= 1) {
                             $authorDiv.append(', ');
                         }
                         if (k >= 2) {
-                            $authorDiv.append(' +' + (info.authors.length - 2) + ' more');
+                            $authorDiv.append(` +${info.authors.length - 2} more`);
                             break;
                         }
                         $authorDiv.append(
-                            $('<a href="/#people/' + info.authors[k] + '" target="_top">')
-                                .append(info.authors[k])
-                                .on('click', function (event) {
-                                    // have to stop propagation so we don't go to the app page first
-                                    event.stopPropagation();
-                                })
+                            this.runtime.$europaUILink(`people/${info.authors[k]}`, info.authors[k], {stopPropagation: true})
                         );
                     }
                     $titleSpan.append($authorDiv);
@@ -437,17 +406,20 @@ define(['jquery'], function ($) {
                     if (info.module_name) {
                         // module name right now is encoded in the ID
                         if (linkTag) {
-                            window.parent.location.href = '/#catalog/apps/' + info.id + '/' + linkTag;
+                            self.runtime.catalogNavigate(`apps/${info.id}/${linkTag}`);
                         } else {
-                            window.parent.location.href = '/#catalog/apps/' + info.id;
+                            self.runtime.catalogNavigate(`apps/${info.id}`)
                         }
                     } else {
                         // legacy method, encoded as l.m
-                        window.parent.location.href = '/#catalog/apps/l.m/' + info.id;
+                        self.runtime.catalogNavigate(`apps/l.m/${info.id}`)
                     }
                 } else {
+                    // TODO: I don't think this path is supported any longer
+                    //       (for as long as I remember!)
                     // apps still go to old style page
-                    window.parent.location.href = '/#narrativestore/app/' + info.id;
+                    self.runtime.kbaseUINavigate(`/#narrativestore/app/${info.id}`);
+                    // window.parent.location.href = '/#narrativestore/app/' + info.id;
                 }
             });
 

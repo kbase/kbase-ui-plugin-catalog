@@ -6,8 +6,7 @@ define([
     'datatables',
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], function ($, Promise, Catalog, CatalogUtil) {
-    'use strict';
+], ($, Promise, Catalog, CatalogUtil) => {
     $.KBWidget({
         name: 'KBaseCatalogModuleBrowser',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -125,15 +124,7 @@ define([
         initMainPanel: function () {
             var $mainPanel = $('<div>').addClass('container-fluid');
 
-            $mainPanel.append(
-                $('<div>')
-                    .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
-                        )
-                    )
-            );
+            $mainPanel.append(this.runtime.$backToCatalogIndex());
 
             var $moduleListPanel = $('<div>');
             $mainPanel.append($moduleListPanel);
@@ -173,12 +164,7 @@ define([
                             moduleData['is_service'] = 'Yes';
                         }
 
-                        moduleData['module_name_link'] =
-                            '<a href="/#catalog/modules/' +
-                            moduleData['module_name'] +
-                            '" target="_top">' +
-                            moduleData['module_name'] +
-                            '</a>';
+                        moduleData['module_name_link'] = self.runtime.$makeKBaseUILink(`catalog/modules/${moduleData['module_name']}`, moduleData['module_name']).get(0).outerHTML;
                         moduleData['git_url_link'] =
                             '<a href="' + moduleData['git_url'] + '" target="_blank">' + moduleData['git_url'] + '</a>';
                         moduleData['owners_link'] = '';
@@ -191,12 +177,7 @@ define([
                             if (o >= 1) {
                                 moduleData['owners_link'] += ', ';
                             }
-                            moduleData['owners_link'] +=
-                                '<a href="/#people/' +
-                                moduleData['owners'][o] +
-                                '" target="_top">' +
-                                moduleData['owners'][o] +
-                                '</a>';
+                            moduleData['owners_link'] += self.runtime.$europaUILink(`people/${moduleData['owners'][o]}`, moduleData['owners'][o]).get(0).outerHTML;
                         }
                         self.moduleList.push(moduleData);
                         if (isMyModule) {

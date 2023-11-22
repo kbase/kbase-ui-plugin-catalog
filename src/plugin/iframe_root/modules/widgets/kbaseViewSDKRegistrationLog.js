@@ -5,8 +5,7 @@
  * @public
  */
 
-define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWidget'], function ($, Catalog) {
-    'use strict';
+define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWidget'], ($, Catalog) => {
     $.KBWidget({
         name: 'KBaseViewSDKRegistrationLog',
         parent: 'kbaseAuthenticatedWidget',
@@ -66,11 +65,9 @@ define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWi
             $table.append(
                 '<tr><td width="' +
                     width +
-                    '">Registration ID</td><td><a href="/#catalog/register/' +
-                    self.registration_id +
-                    '" target="_top">' +
-                    self.registration_id +
-                    '</a></td></tr>'
+                    '">Registration ID</td><td>'+
+                    this.runtime.$catalogLink(`register/${this.registration_id}`, this.registration_id).get(0).outerHTML +
+                    '</td></tr>'
             );
 
             self.$registration_state_td = $('<td></td>');
@@ -186,11 +183,8 @@ define(['jquery', 'kb_service/client/catalog', 'kb_widget/legacy/authenticatedWi
                 if (self.options.show_module_links) {
                     self.$registration_state_td.append('&nbsp;&nbsp;&nbsp;');
                     self.$registration_state_td.append(
-                        'Successfully registered <a href="/#catalog/modules/' +
-                            build_info.module_name_lc +
-                            '" target="_top">' +
-                            build_info.module_name_lc +
-                            '</a> '
+                        'Successfully registered '+
+                        self.runtime.$catalogLink(`modules/${build_info.module_name_lc}`, build_info.module_name_lc).get(0).outerHTML
                     );
                     self.$registration_state_td.append(
                         'from <a href="' + build_info.git_url + '" target="_blank">' + build_info.git_url + '</a>.'

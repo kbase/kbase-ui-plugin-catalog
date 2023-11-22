@@ -1,11 +1,12 @@
 define([
     'bluebird',
+    'jquery',
     'kb_lib/props',
     'kb_lib/messenger',
     './widget/manager',
     './services/session',
     './services/widget'
-], (Promise, props, Messenger, WidgetManager, SessionService, WidgetService) => {
+], (Promise, $, props, Messenger, WidgetManager, SessionService, WidgetService) => {
     class Runtime {
         constructor({authorization, token, username, config, pluginConfig}) {
             this.token = token;
@@ -38,6 +39,108 @@ define([
 
         getConfig(path, defaultValue) {
             return this.config(path, defaultValue);
+        }
+
+        basePath() {
+            return this.configDb.getItem('deploy.basePath', '/');
+        }
+
+        $makeKBaseUILink(path, label, options = {}) {
+            const $link = $(document.createElement('a'))
+                .attr('href', `${this.basePath()}#${path}`)
+                .attr('target', '_parent');
+
+            if (options.icon) {
+                $link.append($('<span>')
+                    .addClass(`fa fa-${options.icon}`));
+            }
+
+            $link.append($('<span> </span>'));
+            $link.append($('<span>').text(label));
+
+            if (options.stopPropagation) {
+                $link.on('click', (e) => {e.stopPropagation();});
+            }
+
+            return $link;
+        }
+
+        catalogPath(path) {
+            return `${this.basePath()}#catalog/${path}`;
+        }
+
+        catalogNavigate(path) {
+            window.parent.location.href = this.catalogPath(path);
+        }
+
+        kbaseUINavigate(path) {
+            window.parent.location.href = this.$makeCatalogURL(path);
+        }
+
+
+        $catalogLink(path, label, options = {}) {
+            const $link = $(document.createElement('a'))
+                .attr('href', `${this.basePath()}#catalog/${path}`)
+                .attr('target', '_parent');
+
+            if (options.icon) {
+                $link.append($('<span>')
+                    .addClass(`fa fa-${options.icon}`));
+            }
+
+            $link.append($('<span> </span>'));
+            $link.append($('<span>').text(label));
+
+            if (options.stopPropagation) {
+                $link.on('click', (e) => {e.stopPropagation();});
+            }
+
+            return $link;
+        }
+
+        $europaUILink(path, label, options={}) {
+            const $link = $(document.createElement('a'))
+                .attr('href', `/#${path}`)
+                .text(label);
+
+            if (typeof options.newWindow === 'undefined' || options.newWindow) {
+                $link.attr('target', '_blank');
+            } else {
+                $link.attr('target', '_top');
+            }
+
+            if (options.stopPropagation) {
+                $link.on('click', (e) => {e.stopPropagation();});
+            }
+
+            return $link;
+        }
+
+        $backTo(path, label) {
+            const $path = path === null ? 'catalog' : `catalog/${path}`;
+            const $link = this.$makeKBaseUILink(
+                $path,
+                `back to the ${label}`,
+                {icon: 'chevron-left'});
+            return $('<div>')
+                .addClass('kbcb-back-link')
+                .append($link);
+        }
+
+        $backToAppCatalog() {
+            return this.$backTo('apps', 'App Catalog');
+        }
+
+        $backToModuleCatalog() {
+            return this.$backTo('modules', 'Module Catalog');
+        }
+
+        $backToCatalogIndex() {
+            return this.$backTo(null, 'Catalog Index');
+        }
+
+        $backToFunctionCatalog() {
+            return this.$backTo('functions', 'Function Catalog');
         }
 
         service(name) {

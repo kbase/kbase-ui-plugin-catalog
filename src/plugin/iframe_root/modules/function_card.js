@@ -1,6 +1,4 @@
-define(['jquery'], function ($) {
-    'use strict';
-
+define(['jquery'], ($) => {
     // favorites callback should accept:
     //
     //  favoritesCallback(this.info)
@@ -11,10 +9,11 @@ define(['jquery'], function ($) {
     //
     //function FunctionCard(type, info, tag, nms_base_url, favoritesCallback, favoritesCallbackParams, isLoggedIn) {
 
-    function FunctionCard(info, isLoggedIn) {
+    function FunctionCard(info, runtime) {
         this.$divs = [];
         this.info = info;
-        this.isLoggedIn = isLoggedIn;
+        this.runtime = runtime;
+        this.isLoggedIn = runtime.service('session').isLoggedIn();
 
         this.cardsAdded = 0;
 
@@ -170,16 +169,12 @@ define(['jquery'], function ($) {
             $titleSpan.append(
                 $('<div>')
                     .addClass('kbcb-app-card-module')
-                    .css({ 'padding-top': '4px' })
-                    .append(
-                        $('<a href="/#catalog/modules/' + info.module_name + '" target="_top">')
-                            .append(info.module_name)
-                            .on('click', function (event) {
-                                // have to stop propagation so we don't go to the app page first
-                                event.stopPropagation();
-                            })
-                    )
-                    .append(' v' + info.version)
+                    .css({'padding-top': '4px'})
+                    .append(this.runtime.$makeKBaseUILink(
+                        `catalog/modules/${info.module_name}`,
+                        info.module_name,
+                        {stopPropagation: true}))
+                    .append(` v${info.version}`)
             );
 
             if (info.authors.length > 0) {
@@ -195,13 +190,7 @@ define(['jquery'], function ($) {
                         break;
                     }
                     $authorDiv.append(
-                        $('<a href="/#people/' + info.authors[k] + '" target="_top">')
-                            .append(info.authors[k])
-                            .on('click', function (event) {
-                                // have to stop propagation so we don't go to the app page first
-                                event.stopPropagation();
-                            })
-                    );
+                        this.runtime.$europaUILink(`people/${info.authors[k]}`, info.authors[k], {stopPropagation: true}));
                 }
                 $titleSpan.append($authorDiv);
             }
@@ -300,16 +289,16 @@ define(['jquery'], function ($) {
                 }
             }
 
-            var $moreInfoDiv = $('<div>')
+            const $moreInfoDiv = $('<div>')
                 .addClass('col-xs-1')
                 .addClass('kbcb-info')
                 .css('text-align', 'right');
             $moreInfoDiv
-                .on('mouseenter', function () {
+                .on('mouseenter', () => {
                     $topDiv.hide();
                     $subtitle.fadeIn('fast');
                 })
-                .on('mouseleave', function () {
+                .on('mouseleave', () => {
                     $subtitle.hide();
                     $topDiv.fadeIn('fast');
                 });
@@ -317,17 +306,16 @@ define(['jquery'], function ($) {
             $footer.append($moreInfoDiv);
             $appDiv.append($footer);
 
-            $appDiv.on('click', function () {
+            $appDiv.on('click', () => {
                 if (info.git_commit_hash) {
-                    window.parent.location.href =
-                        '/#catalog/functions/' + info.module_name + '/' + info.function_id + '/' + info.git_commit_hash;
+                    this.runtime.catalogNavigate(`functions/${info.module_name}/${info.function_id}/${info.git_commit_hash}`);
                 } else {
-                    window.parent.location.href = '/#catalog/functions/' + info.module_name + '/' + info.function_id;
+                    this.runtime.catalogNavigate(`functions/${info.module_name}/${info.function_id}`);
                 }
             });
 
             // put it all in a container so we can control margins
-            var $appCardContainer = $('<div>').addClass('kbcb-app-card-container');
+            const $appCardContainer = $('<div>').addClass('kbcb-app-card-container');
             return $appCardContainer.append($appDiv);
         };
     }

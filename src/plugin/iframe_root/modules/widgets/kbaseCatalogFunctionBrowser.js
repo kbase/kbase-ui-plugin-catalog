@@ -7,9 +7,7 @@ define([
 
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], function (Promise, $, Catalog, CatalogUtil, FunctionCard) {
-    'use strict';
-
+], (Promise, $, Catalog, CatalogUtil, FunctionCard) => {
     $.KBWidget({
         name: 'kbaseCatalogFunctionBrowser',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -235,17 +233,10 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append($('<a href="/#catalog/status" target="_top">').append('Status'));
+            var $statusLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog/status', 'Status'));
+            var $registerLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
+            var $indexLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog', 'Index', {icon: 'bars'}));
 
-            var $registerLink = $('<li>').append(
-                $('<a href="/#catalog/register" target="_top">').append(
-                    '<i class="fa fa-plus-circle"></i> Add Module'
-                )
-            );
-
-            var $indexLink = $('<li>').append(
-                $('<a href="/#catalog" target="_top">').append('<i class="fa fa-bars"></i> Index')
-            );
             var $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
             );
@@ -458,7 +449,7 @@ define([
 
                     self.functionList = [];
                     for (var k = 0; k < functions.length; k++) {
-                        var card = new FunctionCard(functions[k], self.runtime.service('session').isLoggedIn());
+                        var card = new FunctionCard(functions[k], self.runtime);
                         self.functionList.push(card);
                     }
                 })
@@ -646,7 +637,7 @@ define([
                                 .css({ color: '#777' })
                                 .append(
                                     $('<h4>').append(
-                                        '<a href="/#catalog/modules/' + m + '" target="_top">' + m + '</a>'
+                                        self.runtime.$makeKBaseUILink(`catalog/modules/${m}`, m)
                                     )
                                 )
                         );
@@ -674,7 +665,7 @@ define([
                             .css({ color: '#777' })
                             .append(
                                 $('<h4>').append(
-                                    '<a href="/#people/' + devs[k] + '" target="_top">' + devs[k] + '</a>'
+                                    self.runtime.$europaUILink(`people/${devs[k]}`, devs[k])
                                 )
                             )
                     );
@@ -839,7 +830,10 @@ define([
                             .css({ color: '#777' })
                             .append(
                                 $('<h4>').append(
-                                    $('<a href="/#spec/type/' + types[k] + '" target="_top">').append(types[k])
+                                    // Hmm, originall was showing a link, but the
+                                    // "types" are not actually just types, some are
+                                    // file formats, so the links don't work.
+                                    types[k]
                                 )
                             )
                     );

@@ -6,9 +6,7 @@ define([
 
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], function ($, Promise, Catalog, CatalogUtil) {
-    'use strict';
-
+], ($, Promise, Catalog, CatalogUtil) => {
     $.KBWidget({
         name: 'KBaseCatalogAdmin',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -110,15 +108,7 @@ define([
         initMainPanel: function () {
             var $mainPanel = $('<div>').addClass('container-fluid');
 
-            $mainPanel.append(
-                $('<div>')
-                    .addClass('kbcb-back-link')
-                    .append(
-                        $('<a href="/#catalog" target="_top">').append(
-                            '<i class="fa fa-chevron-left"></i> back to the Catalog Index'
-                        )
-                    )
-            );
+            $mainPanel.append(this.runtime.$backToCatalogIndex());
 
             $mainPanel.append($('<h3>').append('Catalog Admin Console:'));
 
@@ -188,7 +178,9 @@ define([
         renderBasicStatus: function () {
             var self = this;
 
-            self.$basicStatusDiv.append('<a href="/#catalog/status" target="_top">Catalog Status Page</a><br><br>');
+            self.$basicStatusDiv.append(
+                this.runtime.$catalogLink('status', 'Catalog Status Page')
+            ).append('<br>').append('<br>');
             self.$basicStatusDiv.append('Running <b>v' + self.catalog_version + '</b> of the Catalog Server on: ');
             self.$basicStatusDiv.append(
                 '<a href="' +
@@ -385,18 +377,14 @@ define([
                     $('<tr>')
                         .append(
                             $('<td>').append(
-                                $(
-                                    '<a href="/#catalog/modules/' +
-                                        self.released_modules[k].module_name +
-                                        '" target="_top">'
-                                ).append(self.released_modules[k].module_name)
+                                self.runtime.$catalogLink(`modules/${self.released_modules[k].module_name}`, self.released_modules[k].module_name)
                             )
                         )
                         .append(
                             $('<td>').append(
-                                $('<a href="' + self.released_modules[k].git_url + '">').append(
-                                    self.released_modules[k].git_url
-                                )
+                                $('<a href="' + self.released_modules[k].git_url + '">')
+                                    .text(self.released_modules[k].git_url)
+                                    .attr('target', '_blank')
                             )
                         )
                 );
@@ -410,17 +398,12 @@ define([
                 $tbl.append(
                     $('<tr>')
                         .append(
-                            $('<td>').append(
-                                $(
-                                    '<a href="/#catalog/modules/' +
-                                        self.unreleased_modules[k].module_name +
-                                        '" target="_top">'
-                                ).append(self.unreleased_modules[k].module_name)
-                            )
+                            $('<td>')
+                                .append(self.runtime.$catalogLink(`modules/${self.unreleased_modules[k].module_name}`, self.unreleased_modules[k].module_name))
                         )
                         .append(
                             $('<td>').append(
-                                $('<a href="' + self.unreleased_modules[k].git_url + '">').append(
+                                $('<a target="_blank" href="' + self.unreleased_modules[k].git_url + '">').append(
                                     self.unreleased_modules[k].git_url
                                 )
                             )
@@ -436,16 +419,12 @@ define([
                     $('<tr>')
                         .append(
                             $('<td>').append(
-                                $(
-                                    '<a href="/#catalog/modules/' +
-                                        self.inactive_modules[k].module_name +
-                                        '" target="_top">'
-                                ).append(self.inactive_modules[k].module_name)
+                                self.runtime.$catalogLink(`modules/${self.inactive_modules[k].module_name}`, self.inactive_modules[k].module_name)
                             )
                         )
                         .append(
                             $('<td>').append(
-                                $('<a href="' + self.inactive_modules[k].git_url + '">').append(
+                                $('<a target="_blank" href="' + self.inactive_modules[k].git_url + '">').append(
                                     self.inactive_modules[k].git_url
                                 )
                             )
@@ -475,13 +454,9 @@ define([
                     var addRow = function (mod) {
                         var $li = $('<li>');
                         $li.append(
-                            '<a href="/#catalog/modules/' +
-                                mod.module_name +
-                                '" target="_top">' +
-                                mod.module_name +
-                                '</a>'
+                            self.runtime.$catalogLink(`modules/${mod.module_name}`, mod.module_name)
                         );
-                        $li.append('- <a href="' + mod.git_url + '">' + mod.git_url + '</a><br>');
+                        $li.append('- <a target="_blank" href="' + mod.git_url + '">' + mod.git_url + '</a><br>');
                         $li.append(mod.git_commit_hash + ' - ' + mod.git_commit_message + '<br>');
                         $li.append('owners: [');
                         for (var owner = 0; owner < mod.owners.length; owner++) {
@@ -489,11 +464,7 @@ define([
                                 $li.append(', ');
                             }
                             $li.append(
-                                '<a href="/#people/' +
-                                    mod.owners[owner] +
-                                    '" target="_top">' +
-                                    mod.owners[owner] +
-                                    '</a>'
+                                self.runtime.$europaUILink(`people/${mod.owners[owner]}`, mod.owners[owner])
                             );
                         }
                         $li.append(']<br>');
@@ -687,7 +658,7 @@ define([
             for (var k = 0; k < self.dev_list.length; k++) {
                 $devList.append(
                     $('<div>').append(
-                        $('<a href="/#people/' + self.dev_list[k] + '" target="_top">').append(self.dev_list[k])
+                        self.runtime.$europaUILink(`people/${self.dev_list[k]}`, self.dev_list[k])
                     )
                 );
             }
@@ -839,11 +810,7 @@ define([
                     $('<tr>')
                         .append(
                             $('<td>').append(
-                                $(
-                                    '<a href="/#catalog/modules/' +
-                                        self.client_groups[k].module_name +
-                                        '" target="_top">'
-                                ).append(self.client_groups[k].module_name)
+                                self.runtime.$catalogLink(`modules/${self.client_groups[k].module_name}`, self.client_groups[k].module_name)
                             )
                         )
                         .append($('<td>').append(self.client_groups[k].function_name))
@@ -1082,9 +1049,7 @@ define([
                     $('<tr>')
                         .append(
                             $('<td>').append(
-                                $('<a href="/#catalog/modules/' + module_name + '" target="_top">').append(
-                                    module_name
-                                )
+                                self.runtime.$catalogLink(`modules/${module_name}`, module_name)
                             )
                         )
                         .append($('<td>').append(function_name))

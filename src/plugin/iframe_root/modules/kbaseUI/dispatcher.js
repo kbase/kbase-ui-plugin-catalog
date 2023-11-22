@@ -78,7 +78,6 @@ define(['require'], (require) => {
             //     return this.currentPanel.widget.run(params);
             // }
 
-
             return this.unmount()
                 .then(() => {
                     let widget;
