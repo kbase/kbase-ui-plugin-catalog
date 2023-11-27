@@ -464,7 +464,7 @@ define([
                                 $li.append(', ');
                             }
                             $li.append(
-                                self.runtime.$europaUILink(`people/${mod.owners[owner]}`, mod.owners[owner])
+                                self.runtime.$europaKBaseUILink(`people/${mod.owners[owner]}`, mod.owners[owner])
                             );
                         }
                         $li.append(']<br>');
@@ -658,7 +658,7 @@ define([
             for (var k = 0; k < self.dev_list.length; k++) {
                 $devList.append(
                     $('<div>').append(
-                        self.runtime.$europaUILink(`people/${self.dev_list[k]}`, self.dev_list[k])
+                        self.runtime.$europaKBaseUILink(`people/${self.dev_list[k]}`, self.dev_list[k])
                     )
                 );
             }

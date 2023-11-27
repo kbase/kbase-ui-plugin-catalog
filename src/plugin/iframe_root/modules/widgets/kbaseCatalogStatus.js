@@ -173,7 +173,7 @@ define([
                 for (var k = 0; k < self.requested_releases.length; k++) {
                     var mod = self.requested_releases[k];
                     var $li = $('<li>');
-                    $li.append(this.runtime.$makeKBaseUILink(`catalog/modules/${mod.module_name}`, mod.module_name));
+                    $li.append(this.runtime.$kbaseUILink(`catalog/modules/${mod.module_name}`, mod.module_name));
                     $li.append(' - <a href="' + mod.git_url + '">' + mod.git_url + '</a><br>');
                     $li.append(mod.git_commit_hash + ' - ' + mod.git_commit_message + '<br>');
                     $li.append('owners: [');
@@ -181,7 +181,7 @@ define([
                         if (owner > 0) {
                             $li.append(', ');
                         }
-                        $li.append(this.runtime.$europaUILink(`people/${mod.owners[owner]}`, mod.owners[owner]))
+                        $li.append(this.runtime.$europaKBaseUILink(`people/${mod.owners[owner]}`, mod.owners[owner]))
                     }
                     $li.append(']<br>');
                     $li.append('Registered on: ' + new Date(mod.timestamp).toLocaleString() + '<br>');
@@ -315,7 +315,7 @@ define([
             if (info.module_name_lc) {
                 $row.append(
                     $('<strong>').append(
-                        this.runtime.$makeKBaseUILink(`catalog/modules/${info.module_name_lc}`, info.module_name_lc)
+                        this.runtime.$kbaseUILink(`catalog/modules/${info.module_name_lc}`, info.module_name_lc)
                     ));
                 $row.append(' - ');
                 // );
@@ -330,7 +330,7 @@ define([
                     .append(timestamp)
                     .append('<br>')
                     .append(
-                        this.runtime.$makeKBaseUILink(`catalog/register/${info.registration_id}`,info.registration_id )));
+                        this.runtime.$kbaseUILink(`catalog/register/${info.registration_id}`,info.registration_id )));
             $row.append('<br>');
             $row.append('Status: ' + info.registration);
             if (info.error_message) {

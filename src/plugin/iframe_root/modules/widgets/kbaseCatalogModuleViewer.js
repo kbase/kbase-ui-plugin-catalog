@@ -182,7 +182,7 @@ define([
                     $owners.append(', ');
                 }
 
-                $owners.append(self.runtime.$europaUILink(`people/${username}`, username,));
+                $owners.append(self.runtime.$europaKBaseUILink(`people/${username}`, username,));
 
                 if (self.runtime.service('session').getUsername() === info.owners[k]) {
                     isOwner = true;
@@ -231,7 +231,7 @@ define([
                         'Development Version',
                         $('<div>')
                             .append(
-                                self.runtime.$makeKBaseUILink(
+                                self.runtime.$kbaseUILink(
                                     `catalog/status/${info.module_name}`,
                                     'View recent registrations'))
                             .append(self.renderVersion('dev', info.dev))
@@ -299,10 +299,10 @@ define([
                         var id = version.narrative_methods[i];
                         if (tag) {
                             $l.append(
-                                $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}/${tag}`, id)));
+                                $('<li>').append(this.runtime.$kbaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}/${tag}`, id)));
                         } else {
                             $l.append(
-                                $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}`, id)));
+                                $('<li>').append(this.runtime.$kbaseUILink(`catalog/apps/${this.moduleDetails.info.module_name}/${id}`, id)));
                         }
                         /*$l.append('<li><a href="#narrativestore/method/'+this.moduleDetails.info.module_name+'/'+id+
                             '">'+id+'</a></li>');*/
@@ -323,7 +323,7 @@ define([
                     for (i = 0; i < version.local_functions.length; i++) {
                         id = version.local_functions[i];
                         $l.append(
-                            $('<li>').append(this.runtime.$makeKBaseUILink(`catalog/functions/${this.moduleDetails.info.module_name}/${id}/${version.git_commit_hash}`, id)));
+                            $('<li>').append(this.runtime.$kbaseUILink(`catalog/functions/${this.moduleDetails.info.module_name}/${id}/${version.git_commit_hash}`, id)));
                     }
                     $verDiv.append($l);
                 } else {
@@ -370,7 +370,7 @@ define([
 
             $adminContent.append('<br>');
 
-            $adminContent.append(self.runtime.$makeKBaseUILink(`catalog/status/${self.moduleDetails.info.module_name}`, 'View recent registrations'));
+            $adminContent.append(self.runtime.$kbaseUILink(`catalog/status/${self.moduleDetails.info.module_name}`, 'View recent registrations'));
 
             $adminContent.append('<br><b>Module state information:</b>');
             var $stateTable = $(

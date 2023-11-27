@@ -1,23 +1,21 @@
-define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet'], function (
+define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet'], (
     Promise,
     DOM,
     html,
     WidgetSet
-) {
-    'use strict';
-
+) => {
     const t = html.tag,
         div = t('div');
 
-    function widget(config) {
-        var mount,
-            container,
-            runtime = config.runtime,
-            widgetSet = new WidgetSet({ 
-                runtime, 
-                widgetManager: runtime.service('widget').widgetManager 
-            }),
-            layout;
+    function make(config) {
+        let mount,
+            container;
+
+        const  runtime = config.runtime;
+        const widgetSet = new WidgetSet({
+            runtime,
+            widgetManager: runtime.service('widget').widgetManager
+        });
 
         // Mini widget manager
         // TODO: the jquery name should be stored in the widget definition not here.
@@ -32,12 +30,12 @@ define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet
             });
         }
 
-        layout = render();
+        const layout = render();
 
         // Widget Interface Implementation
 
         function init(config) {
-            return Promise.try(function () {
+            return Promise.try(() => {
                 return widgetSet.init(config);
             });
         }
@@ -50,23 +48,25 @@ define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet
             return widgetSet.attach();
         }
         function start(params) {
-            return Promise.try(function () {
+            return Promise.try(() => {
                 return widgetSet.start(params);
             });
         }
-        // function run(params) {
-        //     return widgetSet.run(params);
-        // }
+
         function stop() {
             return widgetSet.stop();
         }
+
         function detach() {
             runtime.send('ui', 'setTitle', '');
             return widgetSet.detach()
                 .then(() => {
-                    container.innerHTML = '';
+                    if (container) {
+                        container.innerHTML = '';
+                    }
                 });
         }
+
         function destroy() {
             return widgetSet.destroy();
         }
@@ -76,7 +76,6 @@ define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet
             init,
             attach,
             start,
-            // run,
             stop,
             detach,
             destroy
@@ -84,8 +83,6 @@ define(['bluebird', 'kb_common/dom', 'kb_common/html', 'kbaseUI/widget/widgetSet
     }
 
     return {
-        make: function (config) {
-            return widget(config);
-        }
+        make
     };
 });

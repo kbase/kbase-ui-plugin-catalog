@@ -104,7 +104,7 @@ define([
                 .addClass('btn')
                 .append('start');
             newEntry['module_name'] = entry['module_name'];
-            newEntry['module_name_link'] = this.runtime.$makeKBaseUILink(`catalog/modules/${entry['module_name']}`, entry['module_name']).get(0).outerHTML;
+            newEntry['module_name_link'] = this.runtime.$kbaseUILink(`catalog/modules/${entry['module_name']}`, entry['module_name']).get(0).outerHTML;
             newEntry['version'] = entry['version'];
             newEntry['git_commit_hash'] = entry['git_commit_hash'];
             return newEntry;
@@ -173,7 +173,7 @@ define([
                 data: data,
                 fnCreatedRow: function (nRow, aData) {
                     if (!aData['module_name'].startsWith('!')) {
-                        $('td:eq(0)', nRow).html(self.runtime.$makeKBaseUILink(`catalog/modules/${aData['module_name']}`, aData['module_name']));
+                        $('td:eq(0)', nRow).html(self.runtime.$kbaseUILink(`catalog/modules/${aData['module_name']}`, aData['module_name']));
                     }
                     if (aData['git_commit_hash'] && aData['git_commit_hash'].length == 40) {
                         $('td:eq(8)', nRow).html(aData['git_commit_hash'].substring(0, 7));
