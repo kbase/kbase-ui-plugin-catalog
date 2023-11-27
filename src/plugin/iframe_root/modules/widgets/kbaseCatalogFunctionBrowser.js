@@ -233,9 +233,9 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog/status', 'Status'));
-            var $registerLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
-            var $indexLink = $('<li>').append(this.runtime.$makeKBaseUILink('catalog', 'Index', {icon: 'bars'}));
+            var $statusLink = $('<li>').append(this.runtime.$kbaseUILink('catalog/status', 'Status'));
+            var $registerLink = $('<li>').append(this.runtime.$kbaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
+            var $indexLink = $('<li>').append(this.runtime.$kbaseUILink('catalog', 'Index', {icon: 'bars'}));
 
             var $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
@@ -637,7 +637,7 @@ define([
                                 .css({ color: '#777' })
                                 .append(
                                     $('<h4>').append(
-                                        self.runtime.$makeKBaseUILink(`catalog/modules/${m}`, m)
+                                        self.runtime.$kbaseUILink(`catalog/modules/${m}`, m)
                                     )
                                 )
                         );
@@ -665,7 +665,7 @@ define([
                             .css({ color: '#777' })
                             .append(
                                 $('<h4>').append(
-                                    self.runtime.$europaUILink(`people/${devs[k]}`, devs[k])
+                                    self.runtime.$europaKBaseUILink(`people/${devs[k]}`, devs[k])
                                 )
                             )
                     );

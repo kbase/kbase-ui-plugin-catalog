@@ -209,7 +209,7 @@ define(['jquery'], ($) => {
                 $titleSpan.append(
                     $('<div>')
                         .addClass('kbcb-app-card-module')
-                        .append(this.runtime.$makeKBaseUILink(
+                        .append(this.runtime.$kbaseUILink(
                             `catalog/modules/${module.module_name}`,
                             module.module_name,
                             {stopPropagation: true}))
@@ -230,7 +230,7 @@ define(['jquery'], ($) => {
                             break;
                         }
                         $authorDiv.append(
-                            this.runtime.$europaUILink(`people/${info.authors[k]}`, info.authors[k], {stopPropagation: true})
+                            this.runtime.$europaKBaseUILink(`people/${info.authors[k]}`, info.authors[k], {stopPropagation: true})
                         );
                     }
                     $titleSpan.append($authorDiv);

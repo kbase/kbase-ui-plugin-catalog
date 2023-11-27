@@ -164,7 +164,7 @@ define([
                             moduleData['is_service'] = 'Yes';
                         }
 
-                        moduleData['module_name_link'] = self.runtime.$makeKBaseUILink(`catalog/modules/${moduleData['module_name']}`, moduleData['module_name']).get(0).outerHTML;
+                        moduleData['module_name_link'] = self.runtime.$kbaseUILink(`catalog/modules/${moduleData['module_name']}`, moduleData['module_name']).get(0).outerHTML;
                         moduleData['git_url_link'] =
                             '<a href="' + moduleData['git_url'] + '" target="_blank">' + moduleData['git_url'] + '</a>';
                         moduleData['owners_link'] = '';
@@ -177,7 +177,7 @@ define([
                             if (o >= 1) {
                                 moduleData['owners_link'] += ', ';
                             }
-                            moduleData['owners_link'] += self.runtime.$europaUILink(`people/${moduleData['owners'][o]}`, moduleData['owners'][o]).get(0).outerHTML;
+                            moduleData['owners_link'] += self.runtime.$europaKBaseUILink(`people/${moduleData['owners'][o]}`, moduleData['owners'][o]).get(0).outerHTML;
                         }
                         self.moduleList.push(moduleData);
                         if (isMyModule) {

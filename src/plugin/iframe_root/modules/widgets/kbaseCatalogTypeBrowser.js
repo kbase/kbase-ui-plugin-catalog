@@ -180,10 +180,10 @@ define([
                                             if (o >= 1) {
                                                 owners += ', ';
                                             }
-                                            owners += self.runtime.$europaUILink(`people/${info.owners[o]}`, info.owners[o]).get(0).outerHTML
+                                            owners += self.runtime.$europaKBaseUILink(`people/${info.owners[o]}`, info.owners[o]).get(0).outerHTML
                                         }
-                                        const moduleLink = self.runtime.$europaUILink(`spec/module/${modName}`, modName).get(0).outerHTML;
-                                        const typeLink = self.runtime.$europaUILink(`spec/type/${name}`, typeName).get(0).outerHTML;
+                                        const moduleLink = self.runtime.$europaKBaseUILink(`spec/module/${modName}`, modName).get(0).outerHTML;
+                                        const typeLink = self.runtime.$europaKBaseUILink(`spec/type/${name}`, typeName).get(0).outerHTML;
                                         var typeInfo = {
                                             module: modName,
                                             type: typeName,

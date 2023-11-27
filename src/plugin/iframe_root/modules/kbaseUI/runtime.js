@@ -5,8 +5,9 @@ define([
     'kb_lib/messenger',
     './widget/manager',
     './services/session',
-    './services/widget'
-], (Promise, $, props, Messenger, WidgetManager, SessionService, WidgetService) => {
+    './services/widget',
+    'europaSupport'
+], (Promise, $, props, Messenger, WidgetManager, SessionService, WidgetService, {europaURL, otherUIURL, kbaseUIURL}) => {
     class Runtime {
         constructor({authorization, token, username, config, pluginConfig}) {
             this.token = token;
@@ -45,26 +46,6 @@ define([
             return this.configDb.getItem('deploy.basePath', '/');
         }
 
-        $makeKBaseUILink(path, label, options = {}) {
-            const $link = $(document.createElement('a'))
-                .attr('href', `${this.basePath()}#${path}`)
-                .attr('target', '_parent');
-
-            if (options.icon) {
-                $link.append($('<span>')
-                    .addClass(`fa fa-${options.icon}`));
-            }
-
-            $link.append($('<span> </span>'));
-            $link.append($('<span>').text(label));
-
-            if (options.stopPropagation) {
-                $link.on('click', (e) => {e.stopPropagation();});
-            }
-
-            return $link;
-        }
-
         catalogPath(path) {
             return `${this.basePath()}#catalog/${path}`;
         }
@@ -76,7 +57,6 @@ define([
         kbaseUINavigate(path) {
             window.parent.location.href = this.$makeCatalogURL(path);
         }
-
 
         $catalogLink(path, label, options = {}) {
             const $link = $(document.createElement('a'))
@@ -98,9 +78,19 @@ define([
             return $link;
         }
 
+        /**
+         * Dedicated to producing an anchor link directly to a non-kbase-ui kbase ui -
+         * Europa, narrative, etc.
+         *
+         * @param {*} path
+         * @param {*} label
+         * @param {*} options
+         * @returns
+         */
         $europaUILink(path, label, options={}) {
+            const url = otherUIURL({path});
             const $link = $(document.createElement('a'))
-                .attr('href', `/#${path}`)
+                .attr('href', url.toString())
                 .text(label);
 
             if (typeof options.newWindow === 'undefined' || options.newWindow) {
@@ -116,9 +106,70 @@ define([
             return $link;
         }
 
+        /**
+         * Dedicated to links within kbase-ui, including self-links within the catalog plugin.
+         *
+         * @param {*} path
+         * @param {*} label
+         * @param {*} options
+         * @returns A jquery object wrapping an anchor link to a kbase-ui endpoint.
+         */
+        $kbaseUILink(hash, label, options={}) {
+            const url = kbaseUIURL(hash);
+            const $link = $(document.createElement('a'))
+                .attr('href', url.toString())
+                .attr('target', '_parent');
+
+            if (options.icon) {
+                $link.append($('<span>')
+                    .addClass(`fa fa-${options.icon}`));
+            }
+
+            $link.append($('<span> </span>'));
+            $link.append($('<span>').text(label));
+
+            if (options.stopPropagation) {
+                $link.on('click', (e) => {e.stopPropagation();});
+            }
+
+            return $link;
+        }
+
+        /**
+         * Creates a jQuery HTML anchor link with for a kbase-ui endpoint, via the
+         * Europa top level ui. The only useful such use-case is opening such a
+         * link in a new window. See $kbaseUILink above for the case of opening a plugin
+         * or other kbase-ui link via kbase-ui itself.
+         *
+         * @param {*} hash
+         * @param {*} label
+         * @param {*} options
+         * @returns
+         */
+        $europaKBaseUILink(hash, label, options={}) {
+            const url = europaURL({hash}, true);
+            const $link = $(document.createElement('a'))
+                .attr('href', url.toString())
+                .attr('target', '_blank');
+
+            if (options.icon) {
+                $link.append($('<span>')
+                    .addClass(`fa fa-${options.icon}`));
+            }
+
+            $link.append($('<span> </span>'));
+            $link.append($('<span>').text(label));
+
+            if (options.stopPropagation) {
+                $link.on('click', (e) => {e.stopPropagation();});
+            }
+
+            return $link;
+        }
+
         $backTo(path, label) {
             const $path = path === null ? 'catalog' : `catalog/${path}`;
-            const $link = this.$makeKBaseUILink(
+            const $link = this.$kbaseUILink(
                 $path,
                 `back to the ${label}`,
                 {icon: 'chevron-left'});

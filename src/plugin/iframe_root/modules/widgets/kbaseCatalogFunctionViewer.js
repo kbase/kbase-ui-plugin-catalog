@@ -248,7 +248,7 @@ define([
                         $authorDiv.append(', ');
                     }
                     $authorDiv.append(
-                        this.runtime.$europaUILink(`people/${info.authors[k]}`, info.authors[k])
+                        this.runtime.$europaKBaseUILink(`people/${info.authors[k]}`, info.authors[k])
                     );
                 }
                 $titleSpan.append($authorDiv);

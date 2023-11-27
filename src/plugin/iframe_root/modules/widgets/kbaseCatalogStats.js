@@ -765,8 +765,8 @@ define([
                         var meanQueueTime = s.total_queue_time / s.number_of_calls;
 
                         var stat = {
-                            id: self.runtime.$makeKBaseUILink(`catalog/apps/${s.full_app_id}`, id).get(0).outerHTML,
-                            module: self.runtime.$makeKBaseUILink(`catalog/modules/${s.module_name}`, s.module_name).get(0).outerHTML,
+                            id: self.runtime.$kbaseUILink(`catalog/apps/${s.full_app_id}`, id).get(0).outerHTML,
+                            module: self.runtime.$kbaseUILink(`catalog/modules/${s.module_name}`, s.module_name).get(0).outerHTML,
                             nCalls: s.number_of_calls,
                             nErrors: s.number_of_errors,
                             success: successPercent.toPrecision(3),
@@ -823,8 +823,8 @@ define([
                             module = s.app.split('/')[0];
                             id = s.app.split('/')[1];
                         }
-                        id = self.runtime.$makeKBaseUILink(`catalog/apps/${module}/${id}`, id).get(0).outerHTML;
-                        module = self.runtime.$makeKBaseUILink(`catalog/modules/${module}`,module).get(0).outerHTML;
+                        id = self.runtime.$kbaseUILink(`catalog/apps/${module}/${id}`, id).get(0).outerHTML;
+                        module = self.runtime.$kbaseUILink(`catalog/modules/${module}`,module).get(0).outerHTML;
                     } else {
                         if (s.func) {
                             id = 'API Call: ' + s.func;
@@ -842,7 +842,7 @@ define([
                         id: id,
                         module: module,
                         n: s.n,
-                        u: self.runtime.$europaUILink(`people/${s.user}`, s.user).get(0).outerHTML
+                        u: self.runtime.$europaKBaseUILink(`people/${s.user}`, s.user).get(0).outerHTML
                     };
                     self.adminStats.push(stat);
                 }
@@ -878,7 +878,7 @@ define([
 
                     jobs.forEach(function (job) {
                         // various tidying up and re-formatting of the results which came back from the service.
-                        job.user_id = self.$europaUILink(`people/${job.user}`, job.user).get(0).outerHTML;
+                        job.user_id = self.$europaKBaseUILink(`people/${job.user}`, job.user).get(0).outerHTML;
                         // '<a href="/#people/' + job.user + '" target="_blank">' + job.user + '</a>';
 
                         if (job.app_id) {
