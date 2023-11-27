@@ -2,11 +2,13 @@ define([
     'jquery',
     'bluebird',
     'kb_service/client/workspace',
-    '../catalog_util',
+    'jqueryUtils',
+
+    // For effect
     'datatables',
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap'
-], ($, Promise, Workspace, CatalogUtil) => {
+], ($, Promise, Workspace, {$loadingPanel}) => {
     $.KBWidget({
         name: 'KBaseCatalogTypeBrowser',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -29,11 +31,10 @@ define([
 
             // new style we have a runtime object that gives us everything in the options
             self.runtime = options.runtime;
-            self.util = new CatalogUtil();
             self.setupClients();
 
             // initialize and add the main panel
-            self.$loadingPanel = self.util.initLoadingPanel();
+            self.$loadingPanel = $loadingPanel('Loading Types...');
             self.$elem.append(self.$loadingPanel);
             var mainPanelElements = self.initMainPanel();
             self.$mainPanel = mainPanelElements[0];
@@ -182,7 +183,7 @@ define([
                                             owners += self.runtime.$europaUILink(`people/${info.owners[o]}`, info.owners[o]).get(0).outerHTML
                                         }
                                         const moduleLink = self.runtime.$europaUILink(`spec/module/${modName}`, modName).get(0).outerHTML;
-                                        const typeLink = self.runtime.$europaUILink(`spec/type/${typeName}`, typeName).get(0).outerHTML;
+                                        const typeLink = self.runtime.$europaUILink(`spec/type/${name}`, typeName).get(0).outerHTML;
                                         var typeInfo = {
                                             module: modName,
                                             type: typeName,

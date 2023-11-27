@@ -309,7 +309,7 @@ define([
         }
 
         renderLoading() {
-            return html`<${Loading} message="Loading..." />`;
+            return html`<${Loading} message="Loading App..." />`;
         }
 
         renderError(message) {

@@ -134,9 +134,12 @@ define([
             return [$mainPanel, $basicStatusDiv, $controlToolbarPanel, $buildListPanel];
         },
 
-        initLoadingPanel: function () {
+        initLoadingPanel: function (message) {
             var $loadingPanel = $('<div>').addClass('kbcb-loading-panel-div');
             $loadingPanel.append($('<i>').addClass('fa fa-spinner fa-2x fa-spin'));
+            if (message) {
+                $loadingPanel.append($('<span>').text(message));
+            }
             return $loadingPanel;
         },
 

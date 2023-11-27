@@ -5,7 +5,7 @@ define([
     'jquery',
     'components/KBaseUILink',
     'components/CatalogLink',
-    'components/EuropaUILink',
+    'components/EuropaKBaseUILink',
     'components/BackToCatalogLink',
 
     // for effect
@@ -18,7 +18,7 @@ define([
     jquery,
     KBaseUILink,
     CatalogLink,
-    EuropaUILink,
+    EuropaKBaseUILink,
     BackToCatalogLink
 ) => {
     const {h, Component} = preact;
@@ -78,8 +78,7 @@ define([
                 return html`<div>n/a</div>`;
             }
             const authors =  interpolate(appFullInfo.authors.map((author) => {
-                const path = `people/${author}`;
-                return html`<${KBaseUILink} runtime=${this.props.runtime} path=${path}/>`;
+                return html`<${EuropaKBaseUILink} hash=${`people/${author}`} newWindow=${true}>${author}</>`;
             }), html`<span>, </span>`);
             return html`<span>by ${authors}</span>`;
         }
@@ -350,7 +349,10 @@ define([
                     if (parameter.text_options && parameter.text_options.valid_ws_types) {
                         return parameter.text_options.valid_ws_types.map((typeName) => {
                             const url_prefix = typeName.includes('.') ? 'type' : 'module';
-                            return html`<${EuropaUILink} runtime=${this.props.runtime} path="spec/${url_prefix}/${typeName}">${typeName} </>`;
+                            return html`<${EuropaKBaseUILink} 
+                                hash="spec/${url_prefix}/${typeName}"
+                                newWindow=${true}
+                            >${typeName}</>`;
                         });
                     }
                     return [];
@@ -415,7 +417,6 @@ define([
                     sortedParams.parameters.push(parameter);
                     break;
                 }
-
             }
 
             const fixedParameters = (() => {

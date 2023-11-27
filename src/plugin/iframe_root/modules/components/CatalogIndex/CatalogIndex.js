@@ -33,7 +33,7 @@ define([
 
         renderIndexURL({url, path, title}) {
             if (path) {
-                return html`<${KBaseUILink} runtime=${this.props.runtime} path=${`catalog/${path}`}>${title}</>`;
+                return html`<${KBaseUILink} hash=${`catalog/${path}`}>${title}</>`;
             }
             return html`<a href="${url}" target="_blank">${title} <span className="fa fa-link" /></a>`;
         }

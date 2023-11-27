@@ -28,7 +28,8 @@ define([], () => {
             alignItems: 'center'
         },
         LoadingMessage: {
-            marginLeft: '1em'
+            marginLeft: '1em',
+            fontWeight: 'bold'
         }
     };
 });
