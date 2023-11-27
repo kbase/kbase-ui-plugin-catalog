@@ -1,22 +1,24 @@
 define([
     'preact',
     'htm',
+    'europaSupport'
 ], (
     preact,
-    htm
+    htm,
+    {otherUIURL}
 ) => {
     const {h, Component} = preact;
     const html = htm.bind(h);
 
-    class EuropaUILink extends Component {
+    class EuropaKBaseUILink extends Component {
         render() {
-            const url = `/#${this.props.path}`;
-            const target = typeof this.props.newWindow === 'undefined' || this.props.newWindow ? '_blank': '_top';
+            const url = otherUIURL({hash: this.props.hash}).toString();
+            const target = this.props.newWindow ? '_blank': '_top';
             return html`<a href=${url} target=${target}>
                 ${this.props.children}
             </a>`;
         }
     }
 
-    return EuropaUILink;
+    return EuropaKBaseUILink;
 });

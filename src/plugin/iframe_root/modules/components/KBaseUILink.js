@@ -1,16 +1,18 @@
 define([
     'preact',
     'htm',
+    'europaSupport'
 ], (
     preact,
-    htm
+    htm,
+    {kbaseUIURL}
 ) => {
     const {h, Component} = preact;
     const html = htm.bind(h);
 
     class KBaseUILink extends Component {
         render() {
-            const url = `${this.props.runtime.basePath()}#${this.props.path}`;
+            const url = kbaseUIURL(this.props.hash, this.props.params);
             return html`<a href=${url} target="_parent">
                 ${this.props.children}
             </a>`;

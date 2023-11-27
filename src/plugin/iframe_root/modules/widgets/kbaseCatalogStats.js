@@ -6,12 +6,13 @@ define([
     '../catalog_util',
     'kb_common/dynamicTable',
     'kb_common/jsonRpc/dynamicServiceClient',
+    'jqueryUtils',
 
     'datatables',
     'kb_widget/legacy/authenticatedWidget',
     'bootstrap',
     'datatables_bootstrap'
-], ($, Promise, Catalog, NarrativeJobService, CatalogUtil, DynamicTable, DynamicService) => {
+], ($, Promise, Catalog, NarrativeJobService, CatalogUtil, DynamicTable, DynamicService, {$loadingPanel}) => {
     return $.KBWidget({
         name: 'KBaseCatalogStats',
         parent: 'kbaseAuthenticatedWidget', // todo: do we still need th
@@ -53,7 +54,7 @@ define([
             self.util = new CatalogUtil();
 
             // initialize and add the main panel
-            self.$loadingPanel = self.initLoadingPanel();
+            self.$loadingPanel = $loadingPanel('Loading Job Stats...');
             self.$elem.append(self.$loadingPanel);
             var mainPanelElements = self.initMainPanel();
             self.$mainPanel = mainPanelElements[0];
@@ -711,12 +712,6 @@ define([
             $mainPanel.append('<br><br>');
 
             return [$mainPanel, $basicStatsDiv];
-        },
-
-        initLoadingPanel: function () {
-            var $loadingPanel = $('<div>').addClass('kbcb-loading-panel-div');
-            $loadingPanel.append($('<i>').addClass('fa fa-spinner fa-2x fa-spin'));
-            return $loadingPanel;
         },
 
         showLoading: function () {
