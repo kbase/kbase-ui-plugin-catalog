@@ -43,7 +43,7 @@ define([
         }
 
         basePath() {
-            return this.configDb.getItem('deploy.basePath', '/');
+            return window.parent.location.pathname;
         }
 
         catalogPath(path) {
