@@ -1,4 +1,8 @@
-define([], () => {
+define([
+    'constants'
+], (
+    {EUROPA_LEGACY_PATH}
+) => {
     function kbaseUIURL(hash, params) {
         // We take the base name from the kbase-ui window.
         const baseName = window.parent.location.pathname;
@@ -27,7 +31,7 @@ define([], () => {
         // We assume that a hash refers back to kbase-ui, so we create a
         // legacy path for europa.
         // TODO: Only if pathname is empty.
-        url.pathname = hash ? `legacy/${hash}` : pathname || '';
+        url.pathname = hash ? `${EUROPA_LEGACY_PATH}/${hash}` : pathname || '';
 
         // So in this case we use a standard search fragment.
         if (params && Object.keys(params).length > 0) {
