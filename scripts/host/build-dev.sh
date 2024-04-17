@@ -7,17 +7,17 @@ echo "Starting Build"
 echo "Current user on host"
 echo `whoami`
 echo "Current user in container"
-docker run node:16 whoami
+docker run node:20 whoami
 cd tools/node
 echo "--------------------------"
 echo "Installing packages..."
-docker compose run --rm node npm install
+docker compose run --rm node npm ci
 echo "--------------------------"
 echo "Cleaning ..."
 docker compose run --rm node npm run clean
 echo "--------------------------"
 echo "Installing packages..."
-docker compose run --rm node npm install
+docker compose run --rm node npm ci
 # echo "--------------------------"
 # echo "TRY THIS..."
 # docker compose run --rm node npm init -y

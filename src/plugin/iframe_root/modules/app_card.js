@@ -135,7 +135,7 @@ define(['jquery'], ($) => {
         this.setRunCount = function (runs) {
             this.runCount = runs;
             if (this.runCount) {
-                for (var k = 0; k < this.$divs.length; k++) {
+                for (let k = 0; k < this.$divs.length; k++) {
                     this.$divs[k]
                         .find('.kbcb-runs')
                         .empty()
@@ -146,10 +146,10 @@ define(['jquery'], ($) => {
                                 .append(this.runCount)
                         )
                         .tooltip({
-                            title: 'Ran in a Narrative ' + this.runCount + ' times.',
+                            title: `Ran in a Narrative ${  this.runCount  } times.`,
                             placement: 'bottom',
                             container: 'body',
-                            delay: { show: 400, hide: 40 }
+                            delay: {show: 400, hide: 40}
                         });
                 }
             }
@@ -161,19 +161,19 @@ define(['jquery'], ($) => {
 
         /* rendering methods that are shared in multiple places */
         this._renderAppCard = function () {
-            var info = this.info;
-            var module = this.module;
-            var legacy = this.legacy;
-            var isSdk = this.isSdk;
-            var nms_base_url = this.nms_base_url;
-            var linkTag = this.linkTag;
+            const info = this.info;
+            const module = this.module;
+            const legacy = this.legacy;
+            const isSdk = this.isSdk;
+            const nms_base_url = this.nms_base_url;
+            const linkTag = this.linkTag;
 
             // Main Container
-            var $appDiv = $('<div>').addClass('kbcb-app-card kbcb-hover xcontainer-fluid');
+            const $appDiv = $('<div>').addClass('kbcb-app-card kbcb-hover xcontainer-fluid');
 
             // HEADER - contains logo, title, module link, authors
-            var $topDiv = $('<div>').addClass('xrow kbcb-app-card-header');
-            var $logoSpan = $('<div>').addClass('col-xs-3 kbcb-app-card-logo');
+            const $topDiv = $('<div>').addClass('xrow kbcb-app-card-header');
+            const $logoSpan = $('<div>').addClass('col-xs-3 kbcb-app-card-logo');
 
             if (!legacy) {
                 $logoSpan.append(
@@ -189,7 +189,7 @@ define(['jquery'], ($) => {
             if (info.icon && nms_base_url) {
                 if (info.icon.url) {
                     $logoSpan.html(
-                        $('<img src="' + nms_base_url + info.icon.url + '">').css({
+                        $(`<img src="${  nms_base_url  }${info.icon.url  }">`).css({
                             'max-width': '100%',
                             padding: '6px 3px 3px 0px',
                             'max-height': '85%'
@@ -198,7 +198,7 @@ define(['jquery'], ($) => {
                 }
             }
 
-            var $titleSpan = $('<div>').addClass('col-xs-9 kbcb-app-card-title-panel');
+            const $titleSpan = $('<div>').addClass('col-xs-9 kbcb-app-card-title-panel');
 
             $titleSpan.append(
                 $('<div>')
@@ -240,26 +240,26 @@ define(['jquery'], ($) => {
             $appDiv.append($topDiv.append($logoSpan).append($titleSpan));
 
             // SUBTITLE - on mouseover of info, show subtitle information
-            var $subtitle = $('<div>')
+            const $subtitle = $('<div>')
                 .addClass('kbcb-app-card-subtitle')
                 .append(info.subtitle)
                 .hide();
             $appDiv.append($subtitle);
 
             // FOOTER - stars, number of runs, and info mouseover area
-            var $footer = $('<div>').addClass('clearfix kbcb-app-card-footer');
+            const $footer = $('<div>').addClass('clearfix kbcb-app-card-footer');
 
             if (!legacy) {
-                var $starDiv = $('<div>')
+                const $starDiv = $('<div>')
                     .addClass('col-xs-3')
                     .css('text-align', 'left');
-                var $star = $('<span>')
+                const $star = $('<span>')
                     .addClass('kbcb-star')
                     .append('<i class="fa fa-star"></i>');
                 var self = this;
                 if (self.isLoggedIn) {
                     $star.addClass('kbcb-star-nonfavorite');
-                    $star.on('click', function (event) {
+                    $star.on('click', (event) => {
                         event.stopPropagation();
                         if (!self.deactivatedStar && self.favoritesCallback) {
                             self.favoritesCallback(self);
@@ -269,10 +269,10 @@ define(['jquery'], ($) => {
                         title: 'Click on the star to add/remove from your favorites',
                         placement: 'bottom',
                         container: 'body',
-                        delay: { show: 400, hide: 40 }
+                        delay: {show: 400, hide: 40}
                     });
                 }
-                var $starCount = $('<span>').addClass('kbcb-star-count');
+                const $starCount = $('<span>').addClass('kbcb-star-count');
                 if (this.starCount) {
                     $starCount.html(this.starCount);
                 }
@@ -285,8 +285,8 @@ define(['jquery'], ($) => {
             }
 
             if (isSdk) {
-                var nRuns = Math.floor(Math.random() * 10000);
-                var $nRuns = $('<div>')
+                const nRuns = Math.floor(Math.random() * 10000);
+                const $nRuns = $('<div>')
                     .addClass('col-xs-3')
                     .css('text-align', 'left');
                 $nRuns.append($('<span>').addClass('kbcb-runs'));
@@ -299,10 +299,10 @@ define(['jquery'], ($) => {
                                 .append(this.nRuns)
                         )
                         .tooltip({
-                            title: 'Ran in a Narrative ' + nRuns + ' times.',
+                            title: `Ran in a Narrative ${  nRuns  } times.`,
                             container: 'body',
                             placement: 'bottom',
-                            delay: { show: 400, hide: 40 }
+                            delay: {show: 400, hide: 40}
                         });
                 }
                 $footer.append($nRuns);
@@ -313,7 +313,7 @@ define(['jquery'], ($) => {
             // version tags
             if (this.showReleaseTagLabels) {
                 if (isSdk) {
-                    var $ver_tags = $('<div>')
+                    const $ver_tags = $('<div>')
                         .addClass('col-xs-4')
                         .css('text-align', 'left');
                     if (
@@ -329,7 +329,7 @@ define(['jquery'], ($) => {
                                     title: 'Tagged as the latest released version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
@@ -346,7 +346,7 @@ define(['jquery'], ($) => {
                                     title: 'Tagged as the current beta version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
@@ -363,7 +363,7 @@ define(['jquery'], ($) => {
                                     title: 'Tagged as the current development version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
@@ -384,16 +384,16 @@ define(['jquery'], ($) => {
                 );
             }
 
-            var $moreInfoDiv = $('<div>')
+            const $moreInfoDiv = $('<div>')
                 .addClass('col-xs-1')
                 .addClass('kbcb-info')
                 .css('text-align', 'right');
             $moreInfoDiv
-                .on('mouseenter', function () {
+                .on('mouseenter', () => {
                     $topDiv.hide();
                     $subtitle.fadeIn('fast');
                 })
-                .on('mouseleave', function () {
+                .on('mouseleave', () => {
                     $subtitle.hide();
                     $topDiv.fadeIn('fast');
                 });
@@ -401,30 +401,30 @@ define(['jquery'], ($) => {
             $footer.append($moreInfoDiv);
             $appDiv.append($footer);
 
-            $appDiv.on('click', function () {
+            $appDiv.on('click', () => {
                 if (!legacy) {
                     if (info.module_name) {
                         // module name right now is encoded in the ID
                         if (linkTag) {
                             self.runtime.catalogNavigate(`apps/${info.id}/${linkTag}`);
                         } else {
-                            self.runtime.catalogNavigate(`apps/${info.id}`)
+                            self.runtime.catalogNavigate(`apps/${info.id}`);
                         }
                     } else {
                         // legacy method, encoded as l.m
-                        self.runtime.catalogNavigate(`apps/l.m/${info.id}`)
+                        self.runtime.catalogNavigate(`apps/l.m/${info.id}`);
                     }
                 } else {
                     // TODO: I don't think this path is supported any longer
                     //       (for as long as I remember!)
                     // apps still go to old style page
-                    self.runtime.kbaseUINavigate(`/#narrativestore/app/${info.id}`);
+                    self.runtime.catalogNavigate(`narrativestore/app/${info.id}`);
                     // window.parent.location.href = '/#narrativestore/app/' + info.id;
                 }
             });
 
             // put it all in a container so we can control margins
-            var $appCardContainer = $('<div>').addClass('kbcb-app-card-container');
+            const $appCardContainer = $('<div>').addClass('kbcb-app-card-container');
             return $appCardContainer.append($appDiv);
         };
     }

@@ -18,13 +18,13 @@ define(['jquery'], ($) => {
         this.cardsAdded = 0;
 
         this.show = function () {
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k].show();
             }
         };
 
         this.hide = function () {
-            for (var k = 0; k < this.$divs.length; k++) {
+            for (let k = 0; k < this.$divs.length; k++) {
                 this.$divs[k].hide();
             }
         };
@@ -33,12 +33,12 @@ define(['jquery'], ($) => {
         this.getNewCardDiv = function () {
             this.cardsAdded += 1;
             if (this.$divs.length < this.cardsAdded) {
-                var $newCard = this._renderFunctionCard();
+                const $newCard = this._renderFunctionCard();
                 this.$divs.push($newCard);
                 return $newCard;
-            } else {
-                return this.$divs[this.cardsAdded - 1];
             }
+            return this.$divs[this.cardsAdded - 1];
+
         };
 
         /* assumes the cards have been detached from DOM*/
@@ -116,7 +116,7 @@ define(['jquery'], ($) => {
         this.setRunCount = function (runs) {
             this.runCount = runs;
             if (this.runCount) {
-                for (var k = 0; k < this.$divs.length; k++) {
+                for (let k = 0; k < this.$divs.length; k++) {
                     this.$divs[k]
                         .find('.kbcb-runs')
                         .empty()
@@ -127,10 +127,10 @@ define(['jquery'], ($) => {
                                 .append(this.runCount)
                         )
                         .tooltip({
-                            title: 'Ran ' + this.runCount + ' times.',
+                            title: `Ran ${  this.runCount  } times.`,
                             placement: 'bottom',
                             container: 'body',
-                            delay: { show: 400, hide: 40 }
+                            delay: {show: 400, hide: 40}
                         });
                 }
             }
@@ -141,17 +141,17 @@ define(['jquery'], ($) => {
         };
 
         this._renderFunctionCard = function () {
-            var info = this.info;
+            const info = this.info;
 
             // Main Container
-            var $appDiv = $('<div>').addClass('kbcb-app-card kbcb-hover xcontainer');
+            const $appDiv = $('<div>').addClass('kbcb-app-card kbcb-hover xcontainer');
 
             // HEADER - contains logo, title, module link, authors
-            var $topDiv = $('<div>')
+            const $topDiv = $('<div>')
                 .addClass('xrow kbcb-app-card-header')
-                .css({ 'padding-left': '10px' });
+                .css({'padding-left': '10px'});
 
-            var $titleSpan = $('<div>').addClass('col-xs-12 kbcb-app-card-title-panel');
+            const $titleSpan = $('<div>').addClass('col-xs-12 kbcb-app-card-title-panel');
 
             $titleSpan.append(
                 $('<div>')
@@ -162,8 +162,8 @@ define(['jquery'], ($) => {
             $titleSpan.append(
                 $('<div>')
                     .addClass('kbcb-function-prototype-title')
-                    .css({ margin: '4px' })
-                    .append('funcdef <span style="font-weight:bold">' + info.function_id + '</span>(...)')
+                    .css({margin: '4px'})
+                    .append(`funcdef <span style="font-weight:bold">${  info.function_id  }</span>(...)`)
             );
 
             $titleSpan.append(
@@ -178,15 +178,15 @@ define(['jquery'], ($) => {
             );
 
             if (info.authors.length > 0) {
-                var $authorDiv = $('<div>')
+                const $authorDiv = $('<div>')
                     .addClass('kbcb-app-card-authors')
                     .append('by ');
-                for (var k = 0; k < info.authors.length; k++) {
+                for (let k = 0; k < info.authors.length; k++) {
                     if (k >= 1) {
                         $authorDiv.append(', ');
                     }
                     if (k >= 2) {
-                        $authorDiv.append(' +' + (info.authors.length - 2) + ' more');
+                        $authorDiv.append(` +${  info.authors.length - 2  } more`);
                         break;
                     }
                     $authorDiv.append(
@@ -198,14 +198,14 @@ define(['jquery'], ($) => {
             $appDiv.append($topDiv.append($titleSpan));
 
             // SUBTITLE - on mouseover of info, show subtitle information
-            var $subtitle = $('<div>')
+            const $subtitle = $('<div>')
                 .addClass('kbcb-app-card-subtitle')
                 .append(info.short_description)
                 .hide();
             $appDiv.append($subtitle);
 
             // FOOTER - stars, number of runs, and info mouseover area
-            var $footer = $('<div>').addClass('clearfix kbcb-app-card-footer');
+            const $footer = $('<div>').addClass('clearfix kbcb-app-card-footer');
 
             /* FAVORITES - not yet implemented for functions */
             $footer.append(
@@ -236,25 +236,25 @@ define(['jquery'], ($) => {
             );
 
             // add release tag information
-            var $releaseTagsDiv = $('<div>')
+            const $releaseTagsDiv = $('<div>')
                 .addClass('col-xs-4')
                 .css('text-align', 'left');
             $footer.append($releaseTagsDiv);
 
-            for (var r = 0; r < info.release_tag.length; r++) {
-                var rts = info.release_tag;
+            for (let r = 0; r < info.release_tag.length; r++) {
+                const rts = info.release_tag;
                 for (r = 0; r < rts.length; r++) {
                     if (rts[r] === 'release') {
                         $releaseTagsDiv.append(
                             $('<span>')
                                 .addClass('label label-primary')
-                                .css({ padding: '.3em .6em .3em' })
+                                .css({padding: '.3em .6em .3em'})
                                 .append('R')
                                 .tooltip({
                                     title: 'Tagged as the latest released version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
@@ -262,13 +262,13 @@ define(['jquery'], ($) => {
                         $releaseTagsDiv.append(
                             $('<span>')
                                 .addClass('label label-info')
-                                .css({ padding: '.3em .6em .3em' })
+                                .css({padding: '.3em .6em .3em'})
                                 .append('B')
                                 .tooltip({
                                     title: 'Tagged as the current beta version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
@@ -276,13 +276,13 @@ define(['jquery'], ($) => {
                         $releaseTagsDiv.append(
                             $('<span>')
                                 .addClass('label label-default')
-                                .css({ padding: '.3em .6em .3em' })
+                                .css({padding: '.3em .6em .3em'})
                                 .append('D')
                                 .tooltip({
                                     title: 'Tagged as the current development version.',
                                     placement: 'bottom',
                                     container: 'body',
-                                    delay: { show: 400, hide: 40 }
+                                    delay: {show: 400, hide: 40}
                                 })
                         );
                     }
