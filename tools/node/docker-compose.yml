@@ -1,8 +1,7 @@
-version: '3.6'
 services:
     node:
         working_dir: /app
-        image: node:16
+        image: node:20
         container_name: node-builder
         dns: 8.8.8.8
         volumes:

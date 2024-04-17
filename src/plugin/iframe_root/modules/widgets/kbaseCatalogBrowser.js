@@ -53,7 +53,7 @@ define([
 
         categories: {},
 
-        init: function (options) {
+        init(options) {
             this._super(options);
 
             this.categories = categoriesConfig.categories;
@@ -70,7 +70,7 @@ define([
                 this.options.tag = this.options.tag.toLowerCase();
                 if (this.options.tag !== 'dev' && this.options.tag !== 'beta' && this.options.tag !== 'release') {
                     console.warn(
-                        'tag ' + this.options.tag + ' is not valid! Use: dev/beta/release.  defaulting to release.'
+                        `tag ${  this.options.tag  } is not valid! Use: dev/beta/release.  defaulting to release.`
                     );
                     this.options.tag = 'release';
                 }
@@ -82,9 +82,9 @@ define([
             }
 
             // initialize and add the control bar
-            var $container = $('<div>').addClass('container-fluid');
+            const $container = $('<div>').addClass('container-fluid');
             this.$elem.append($container);
-            var ctrElements = this.renderControlToolbar();
+            const ctrElements = this.renderControlToolbar();
             this.$controlToolbar = ctrElements[0];
             this.$searchBox = ctrElements[1];
             $container.append(this.$controlToolbar);
@@ -92,7 +92,7 @@ define([
             // initialize and add the main panel
             this.$loadingPanel = this.util.initLoadingPanel();
             this.$elem.append(this.$loadingPanel);
-            var mainPanelElements = this.initMainPanel();
+            const mainPanelElements = this.initMainPanel();
             this.$mainPanel = mainPanelElements[0];
             this.$appListPanel = mainPanelElements[1];
             this.$moduleListPanel = mainPanelElements[2];
@@ -100,7 +100,7 @@ define([
             this.showLoading();
 
             // get the list of apps and modules
-            var loadingCalls = [];
+            const loadingCalls = [];
             this.appList = [];
             this.moduleList = [];
             loadingCalls.push(this.populateAppList(this.options.tag));
@@ -139,7 +139,7 @@ define([
             return this;
         },
 
-        setupClients: function () {
+        setupClients() {
             this.catalog = new Catalog(this.runtime.getConfig('services.catalog.url'), {
                 token: this.runtime.service('session').getAuthToken()
             });
@@ -162,19 +162,19 @@ define([
 
         $ctrList: null,
 
-        renderControlToolbar: function () {
+        renderControlToolbar() {
             // CONTROL BAR CONTAINER
-            var $nav = $('<nav>')
+            const $nav = $('<nav>')
                 .addClass('navbar navbar-default')
-                .css({ border: '0', 'background-color': '#fff' });
-            var $container = $('<div>').addClass('container-fluid');
+                .css({border: '0', 'background-color': '#fff'});
+            const $container = $('<div>').addClass('container-fluid');
 
-            var $content = $('<div>').addClass('');
+            const $content = $('<div>').addClass('');
 
             $nav.append($container.append($content));
 
             // SEARCH
-            var $searchBox = $('<input type="text" placeholder="Search" size="50">').addClass('form-control');
+            const $searchBox = $('<input type="text" placeholder="Search" size="50">').addClass('form-control');
             $searchBox
                 .on('input', () => {
                     this.filterApps($searchBox.val());
@@ -195,76 +195,76 @@ define([
             );
 
             // other controls list
-            var $ctrList = $('<ul>')
+            const $ctrList = $('<ul>')
                 .addClass('nav navbar-nav')
                 .css('font-family', '\'OxygenRegular\', Arial, sans-serif');
             this.$ctrList = $ctrList;
             $content.append($ctrList);
 
             // ORGANIZE BY
-            var $obMyFavs = $('<a href="#">');
+            const $obMyFavs = $('<a href="#">');
             if (this.isLoggedIn) {
                 $obMyFavs.append('My Favorites').on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('my_favorites');
                 });
             }
-            var $obFavs = $('<a href="#">')
+            const $obFavs = $('<a href="#">')
                 .append('Favorites Count')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('favorites');
                 });
-            var $obRuns = $('<a href="#">')
+            const $obRuns = $('<a href="#">')
                 .append('Run Count')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('runs');
                 });
-            var $obNameAz = $('<a href="#">')
+            const $obNameAz = $('<a href="#">')
                 .append('Name (a-z)')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('name_az');
                 });
-            var $obNameZa = $('<a href="#">')
+            const $obNameZa = $('<a href="#">')
                 .append('Name (z-a)')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('name_za');
                 });
-            var $obCat = $('<a href="#">')
+            const $obCat = $('<a href="#">')
                 .append('Category')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('category');
                 });
-            var $obModule = $('<a href="#">')
+            const $obModule = $('<a href="#">')
                 .append('Module')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('module');
                 });
-            var $obOwner = $('<a href="#">')
+            const $obOwner = $('<a href="#">')
                 .append('Developer')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('developer');
                 });
-            var $obInput = $('<a href="#">')
+            const $obInput = $('<a href="#">')
                 .append('Input Types')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('input_types');
                 });
-            var $obOutput = $('<a href="#">')
+            const $obOutput = $('<a href="#">')
                 .append('Output Types')
                 .on('click', (e) => {
                     e.preventDefault();
                     this.renderAppList('output_types');
                 });
 
-            var $organizeBy = $('<li>')
+            const $organizeBy = $('<li>')
                 .addClass('dropdown')
                 .append(
                     '<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Organize by <span class="caret"></span></a>'
@@ -296,13 +296,13 @@ define([
             return [$nav, $searchBox];
         },
 
-        addUserControls: function () {
+        addUserControls() {
             const $verR = this.runtime.$catalogLink('apps/release', 'Released Apps');
             const $verB = this.runtime.$catalogLink('apps/beta', 'Beta Apps');
             // var $verR = $('<a href="/foo#catalog/apps/release" target="_parent">').append('Released Apps');
             // var $verB = $('<a href="/foo#catalog/apps/beta" target="_parent">').append('Beta Apps');
 
-            var $version = $('<li>')
+            const $version = $('<li>')
                 .addClass('dropdown')
                 .append(
                     '<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Version<span class="caret"></span></a>'
@@ -315,18 +315,18 @@ define([
                     .append($('<li>').append($verB))
             );
 
-            var $helpLink = $('<li>').append(
+            const $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
             );
             this.$ctrList.append($version).append($helpLink);
         },
 
-        addDeveloperControls: function () {
+        addDeveloperControls() {
             const $verR = this.runtime.$catalogLink('apps/release', 'Released Apps');
             const $verB = this.runtime.$catalogLink('apps/beta', 'Beta Apps');
             const $verD = this.runtime.$catalogLink('apps/dev', 'Apps in Development');
 
-            var $version = $('<li>')
+            const $version = $('<li>')
                 .addClass('dropdown')
                 .append(
                     '<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Version<span class="caret"></span></a>'
@@ -341,14 +341,14 @@ define([
             );
 
             // NAV LINKS
-            var $statusLink = $('<li>').append(this.runtime.$kbaseUILink("catalog/status", 'Status'));
+            const $statusLink = $('<li>').append(this.runtime.$kbaseUILink('catalog/status', 'Status'));
 
-            var $registerLink = $('<li>').append(this.runtime.$kbaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
+            const $registerLink = $('<li>').append(this.runtime.$kbaseUILink('catalog/register', 'Add Module', {icon: 'plus-circle'}));
 
-            var $indexLink = $('<li>').append(
+            const $indexLink = $('<li>').append(
                 $(this.runtime.$kbaseUILink('catalog', 'Index', {icon: 'bars'}))
             );
-            var $helpLink = $('<li>').append(
+            const $helpLink = $('<li>').append(
                 $('<a href="https://docs.kbase.us/apps" target="_blank">').append('<i class="fa fa-question-circle"></i> Help')
             );
 
@@ -360,16 +360,16 @@ define([
                 .append($helpLink);
         },
 
-        filterApps: function (query) {
+        filterApps(query) {
             query = query.trim();
             if (query) {
-                var terms = query.toLowerCase().match(/\w+|"(?:\\"|[^"])+"/g);
+                const terms = query.toLowerCase().match(/\w+|"(?:\\"|[^"])+"/g);
                 if (terms) {
                     // for everything in the list
-                    for (var k = 0; k < this.appList.length; k++) {
+                    for (let k = 0; k < this.appList.length; k++) {
                         // for every term (every term must match to get a match)
-                        var match = false; // every term must match
-                        for (var t = 0; t < terms.length; t++) {
+                        let match = false; // every term must match
+                        for (let t = 0; t < terms.length; t++) {
                             if (
                                 terms[t].charAt(0) === '"' &&
                                 terms[t].charAt(terms.length - 1) === '"' &&
@@ -400,8 +400,8 @@ define([
 
                             // filter on authors
                             if (this.appList[k].info.authors) {
-                                var authorMatch = false;
-                                for (var a = 0; a < this.appList[k].info.authors.length; a++) {
+                                let authorMatch = false;
+                                for (let a = 0; a < this.appList[k].info.authors.length; a++) {
                                     if (this.appList[k].info.authors[a].toLowerCase().indexOf(terms[t]) >= 0) {
                                         authorMatch = true;
                                         break;
@@ -435,12 +435,12 @@ define([
             }
 
             // hide/show sections
-            var sections = this.$appListPanel.find('.catalog-section');
-            for (var i = 0; i < sections.length; i++) {
+            const sections = this.$appListPanel.find('.catalog-section');
+            for (let i = 0; i < sections.length; i++) {
                 $(sections[i]).show();
-                var cards = $(sections[i]).find('.kbcb-app-card-container,.kbcb-app-card-list-element');
-                var hasVisible = false;
-                for (var j = 0; j < cards.length; j++) {
+                const cards = $(sections[i]).find('.kbcb-app-card-container,.kbcb-app-card-list-element');
+                let hasVisible = false;
+                for (let j = 0; j < cards.length; j++) {
                     if ($(cards[j]).is(':visible')) {
                         hasVisible = true;
                         break;
@@ -452,26 +452,26 @@ define([
             }
         },
 
-        clearFilter: function () {
-            for (var k = 0; k < this.appList.length; k++) {
+        clearFilter() {
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].show();
             }
         },
 
-        initMainPanel: function () {
-            var $mainPanel = $('<div>').addClass('container-fluid');
-            var $appListPanel = $('<div>');
-            var $moduleListPanel = $('<div>');
+        initMainPanel() {
+            const $mainPanel = $('<div>').addClass('container-fluid');
+            const $appListPanel = $('<div>');
+            const $moduleListPanel = $('<div>');
             $mainPanel.append($appListPanel);
             $mainPanel.append($moduleListPanel);
             return [$mainPanel, $appListPanel, $moduleListPanel];
         },
 
-        showLoading: function () {
+        showLoading() {
             this.$loadingPanel.show();
             this.$mainPanel.hide();
         },
-        hideLoading: function () {
+        hideLoading() {
             this.$loadingPanel.hide();
             this.$mainPanel.show();
         },
@@ -479,8 +479,8 @@ define([
         // we assume context is:
         //    catalog: catalog_client
         //    browserWidget: this widget, so we can toggle any update
-        toggleFavorite: function (appCard) {
-            var params = {};
+        toggleFavorite(appCard) {
+            const params = {};
             if (appCard.info.module_name) {
                 params.module_name = appCard.info.module_name;
                 params.id = appCard.info.id.split('/')[1];
@@ -517,11 +517,11 @@ define([
         },
 
         apps: null,
-        populateAppList: function (tag) {
+        populateAppList(tag) {
 
             return (
                 this.nmsClient
-                    .callFunc('list_methods', [{ tag: tag }])
+                    .callFunc('list_methods', [{tag}])
                     // return this.nms.list_methods({ tag: tag })
                     .spread((apps) => {
                         this.apps = apps;
@@ -533,7 +533,7 @@ define([
         },
 
         legacyApps: null,
-        populateAppListWithLegacyApps: function () {
+        populateAppListWithLegacyApps() {
             // apps cannot be registered via the SDK, so don't have tag info
             return (
                 this.nmsClient
@@ -548,8 +548,8 @@ define([
             );
         },
 
-        populateModuleList: function (only_released) {
-            var moduleSelection = {
+        populateModuleList(only_released) {
+            const moduleSelection = {
                 include_released: 1,
                 include_unreleased: 1,
                 include_disabled: 0
@@ -564,7 +564,7 @@ define([
                     // return this.catalog.list_basic_module_info(moduleSelection)
                     .spread((modules) => {
                         this.moduleLookup = {}; // {module_name: {info:{}, hash1:'tag', hash:'tag', ...}
-                        for (var k = 0; k < modules.length; k++) {
+                        for (let k = 0; k < modules.length; k++) {
                             this.moduleLookup[modules[k]['module_name']] = modules[k];
                         }
                     })
@@ -574,19 +574,19 @@ define([
             );
         },
 
-        updateRunStats: function () {
-            var options = {};
+        updateRunStats() {
+            const options = {};
             return (
                 this.catalogClient
                     .callFunc('get_exec_aggr_stats', [options])
                     // return this.catalog.get_exec_aggr_stats(options)
                     .spread((stats) => {
                         this.runStats = stats;
-                        for (var k = 0; k < stats.length; k++) {
-                            var lookup = stats[k].full_app_id;
-                            var idTokens = stats[k].full_app_id.split('/');
+                        for (let k = 0; k < stats.length; k++) {
+                            let lookup = stats[k].full_app_id;
+                            const idTokens = stats[k].full_app_id.split('/');
                             if (idTokens.length === 2) {
-                                lookup = idTokens[0].toLowerCase() + '/' + idTokens[1];
+                                lookup = `${idTokens[0].toLowerCase()  }/${  idTokens[1]}`;
                             }
                             if (this.appLookup[lookup]) {
                                 this.appLookup[lookup].setRunCount(stats[k].number_of_calls);
@@ -599,7 +599,7 @@ define([
             );
         },
 
-        isDeveloper: function () {
+        isDeveloper() {
             const currentUsername = this.runtime.service('session').getUsername();
             return (
                 this.catalogClient
@@ -617,18 +617,18 @@ define([
             );
         },
 
-        updateFavoritesCounts: function () {
-            var listFavoritesParams = {};
+        updateFavoritesCounts() {
+            const listFavoritesParams = {};
             return (
                 this.catalogClient
                     .callFunc('list_favorite_counts', [listFavoritesParams])
                     // return this.catalog.list_favorite_counts(listFavoritesParams)
                     .spread((counts) => {
-                        for (var k = 0; k < counts.length; k++) {
-                            var c = counts[k];
-                            var lookup = c.id;
+                        for (let k = 0; k < counts.length; k++) {
+                            const c = counts[k];
+                            let lookup = c.id;
                             if (c.module_name_lc !== 'nms.legacy') {
-                                lookup = c.module_name_lc + '/' + lookup;
+                                lookup = `${c.module_name_lc  }/${  lookup}`;
                             }
                             if (this.appLookup[lookup]) {
                                 this.appLookup[lookup].setStarCount(c.count);
@@ -642,20 +642,20 @@ define([
         },
 
         // warning!  will not return a promise if the user is not logged in!
-        updateMyFavorites: function () {
+        updateMyFavorites() {
             if (this.isLoggedIn) {
-                var currentUsername = this.runtime.service('session').getUsername();
+                const currentUsername = this.runtime.service('session').getUsername();
                 return (
                     this.catalogClient
                         .callFunc('list_favorites', [currentUsername])
                         // return this.catalog.list_favorites(currentUsername)
                         .spread((favorites) => {
                             this.favoritesList = favorites;
-                            for (var k = 0; k < this.favoritesList.length; k++) {
-                                var fav = this.favoritesList[k];
-                                var lookup = fav.id;
+                            for (let k = 0; k < this.favoritesList.length; k++) {
+                                const fav = this.favoritesList[k];
+                                let lookup = fav.id;
                                 if (fav.module_name_lc !== 'nms.legacy') {
-                                    lookup = fav.module_name_lc + '/' + lookup;
+                                    lookup = `${fav.module_name_lc  }/${  lookup}`;
                                 }
                                 if (this.appLookup[lookup]) {
                                     this.appLookup[lookup].turnOnStar(fav.timestamp);
@@ -669,7 +669,7 @@ define([
             }
         },
 
-        processData: function () {
+        processData() {
             // module lookup table should already exist
             // instantiate the app cards and create the app lookup table
             this.appLookup = {};
@@ -696,7 +696,7 @@ define([
                 //    favoritesCallback: function () // function called when favorites button is clicked
                 //    isLoggedIn: true | false
 
-                var m = new AppCard({
+                const m = new AppCard({
                     runtime: this.runtime,
                     legacy: false,
                     app: this.apps[k],
@@ -712,8 +712,8 @@ define([
                 this.appList.push(m);
 
                 if (m.info.module_name) {
-                    var idTokens = m.info.id.split('/');
-                    this.appLookup[idTokens[0].toLowerCase() + '/' + idTokens[1]] = m;
+                    const idTokens = m.info.id.split('/');
+                    this.appLookup[`${idTokens[0].toLowerCase()  }/${  idTokens[1]}`] = m;
                 } else {
                     this.appLookup[m.info.id] = m;
                 }
@@ -726,7 +726,7 @@ define([
                     continue;
                 }
                 if (this.util.skipApp(this.legacyApps[k].categories)) continue;
-                var a = new AppCard({
+                const a = new AppCard({
                     runtime: this.runtime,
                     legacy: true,
                     app: this.legacyApps[k],
@@ -763,17 +763,17 @@ define([
          This is very useful to call before a viewer, since they
          may be chained together without re-rendering.
          */
-        sortBy: function (sortMethod) {
+        sortBy(sortMethod) {
             switch (sortMethod) {
             case 'favorites':
                 // sort by number of stars, then by app name
                 this.appList.sort((a, b) => {
-                    var aStars = a.getStarCount();
-                    var bStars = b.getStarCount();
+                    const aStars = a.getStarCount();
+                    const bStars = b.getStarCount();
                     if (aStars > bStars) return -1;
                     if (bStars > aStars) return 1;
-                    var aName = a.info.name.toLowerCase();
-                    var bName = b.info.name.toLowerCase();
+                    const aName = a.info.name.toLowerCase();
+                    const bName = b.info.name.toLowerCase();
                     if (aName < bName) return -1;
                     if (aName > bName) return 1;
                     return 0;
@@ -781,43 +781,43 @@ define([
                 break;
             default:
                 // do nothing.
-                console.warn('Unsupported sort method "' + sortMethod + '"');
+                console.warn(`Unsupported sort method "${  sortMethod  }"`);
             }
         },
 
-        renderByCategory: function () {
-            var cats = categoriesConfig.orderings[categoriesConfig.orderings.default];
-            var $catDivLookup = {};
+        renderByCategory() {
+            const cats = categoriesConfig.orderings[categoriesConfig.orderings.default];
+            const $catDivLookup = {};
 
             cats.forEach((category) => {
-                var $section = $('<div>').addClass('catalog-section');
-                var $catDiv = $('<div>').addClass('kbcb-app-card-list-container');
+                const $section = $('<div>').addClass('catalog-section');
+                const $catDiv = $('<div>').addClass('kbcb-app-card-list-container');
                 $catDivLookup[category] = $catDiv;
                 $section.append(
                     $('<div>')
-                        .css({ color: '#777' })
+                        .css({color: '#777'})
                         .append($('<h4>').append(this.categories[category]))
                 );
                 $section.append($catDiv);
                 this.$appListPanel.append($section);
             });
-            var $section = $('<div>').addClass('catalog-section');
-            var $noCatDiv = $('<div>').addClass('kbcb-app-card-list-container');
+            const $section = $('<div>').addClass('catalog-section');
+            const $noCatDiv = $('<div>').addClass('kbcb-app-card-list-container');
             $section.append(
                 $('<div>')
-                    .css({ color: '#777' })
+                    .css({color: '#777'})
                     .append($('<h4>').append('Uncategorized'))
             );
             $section.append($noCatDiv);
             this.$appListPanel.append($section);
 
-            for (var k = 0; k < this.appList.length; k++) {
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
 
                 if (this.appList[k].info.categories.length > 0) {
-                    var appCats = this.appList[k].info.categories;
-                    var gotCat = false;
-                    for (var i = 0; i < appCats.length; i++) {
+                    const appCats = this.appList[k].info.categories;
+                    let gotCat = false;
+                    for (let i = 0; i < appCats.length; i++) {
                         if (Object.prototype.hasOwnProperty.call($catDivLookup, appCats[i])) {
                             gotCat = true;
                             $catDivLookup[appCats[i]].append(this.appList[k].getNewCardDiv());
@@ -832,7 +832,7 @@ define([
             }
         },
 
-        renderByAZ: function () {
+        renderByAZ() {
             // sort by method name, A to Z
             this.appList.sort((a, b) => {
                 if (a.info.name.toLowerCase() < b.info.name.toLowerCase()) {
@@ -843,15 +843,15 @@ define([
                 }
                 return 0;
             });
-            var $listContainer = $('<div>').css({ overflow: 'auto', padding: '0 0 2em 0' });
-            for (var k = 0; k < this.appList.length; k++) {
+            const $listContainer = $('<div>').css({overflow: 'auto', padding: '0 0 2em 0'});
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
                 $listContainer.append(this.appList[k].getNewCardDiv());
             }
             this.$appListPanel.append($listContainer);
         },
 
-        renderByZA: function () {
+        renderByZA() {
             // sort by method name, Z to A
             this.appList.sort((a, b) => {
                 if (a.info.name.toLowerCase() < b.info.name.toLowerCase()) {
@@ -862,15 +862,15 @@ define([
                 }
                 return 0;
             });
-            var $listContainer = $('<div>').css({ overflow: 'auto', padding: '0 0 2em 0' });
-            for (var k = 0; k < this.appList.length; k++) {
+            const $listContainer = $('<div>').css({overflow: 'auto', padding: '0 0 2em 0'});
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
                 $listContainer.append(this.appList[k].getNewCardDiv());
             }
             this.$appListPanel.append($listContainer);
         },
 
-        renderByModule: function () {
+        renderByModule() {
             // Organization by module is simple because things can only be in one module, we sort and group them by module
 
             this.appList.sort((a, b) => {
@@ -885,25 +885,25 @@ define([
                 if (b.info.module_name) return 1;
                 return 0;
             });
-            var currentModuleName = '';
-            var $currentModuleDiv = null;
-            for (var k = 0; k < this.appList.length; k++) {
+            let currentModuleName = '';
+            let $currentModuleDiv = null;
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
 
-                var info = this.appList[k].info;
+                const info = this.appList[k].info;
 
-                var m = info.module_name;
+                let m = info.module_name;
                 if (!m) {
                     m = 'Not in an SDK Module';
                 }
 
                 if (currentModuleName !== m) {
                     currentModuleName = m;
-                    var $section = $('<div>').addClass('catalog-section');
+                    const $section = $('<div>').addClass('catalog-section');
                     $currentModuleDiv = $('<div>').addClass('kbcb-app-card-list-container');
                     $section.append(
                         $('<div>')
-                            .css({ color: '#777' })
+                            .css({color: '#777'})
                             .append(
                                 $('<h4>')
                                     .append(this.runtime.$kbaseUILink(`catalog/modules/${m}`, m))
@@ -916,23 +916,23 @@ define([
             }
         },
 
-        renderByDeveloper: function () {
+        renderByDeveloper() {
             // get and sort the dev list
-            var devs = [];
+            const devs = [];
             for (var k in this.developers) {
                 devs.push(k);
             }
             devs.sort();
 
             // create the sections per author
-            var $authorDivLookup = {};
+            const $authorDivLookup = {};
             for (k = 0; k < devs.length; k++) {
                 var $section = $('<div>').addClass('catalog-section');
-                var $authorDiv = $('<div>').addClass('kbcb-app-card-list-container');
+                const $authorDiv = $('<div>').addClass('kbcb-app-card-list-container');
                 $authorDivLookup[devs[k]] = $authorDiv;
                 $section.append(
                     $('<div>')
-                        .css({ color: '#777' })
+                        .css({color: '#777'})
                         .append(
                             $('<h4>')
                                 .append(this.runtime.$europaKBaseUILink(`people/${devs[k]}`, devs[k]))
@@ -942,10 +942,10 @@ define([
                 this.$appListPanel.append($section);
             }
             $section = $('<div>').addClass('catalog-section');
-            var $noAuthorDiv = $('<div>').addClass('kbcb-app-card-list-container');
+            const $noAuthorDiv = $('<div>').addClass('kbcb-app-card-list-container');
             $section.append(
                 $('<div>')
-                    .css({ color: '#777' })
+                    .css({color: '#777'})
                     .append($('<h4>').append('No Developer Specified'))
             );
             $section.append($noAuthorDiv);
@@ -956,8 +956,8 @@ define([
                 this.appList[k].clearCardsAddedCount();
                 if (this.appList[k].info.app_type === 'app') {
                     if (this.appList[k].info.authors.length > 0) {
-                        var authors = this.appList[k].info.authors;
-                        for (var i = 0; i < authors.length; i++) {
+                        const authors = this.appList[k].info.authors;
+                        for (let i = 0; i < authors.length; i++) {
                             $authorDivLookup[authors[i]].append(this.appList[k].getNewCardDiv());
                         }
                     } else {
@@ -969,7 +969,7 @@ define([
             }
         },
 
-        renderByMyFavorites: function () {
+        renderByMyFavorites() {
             // sort by number of stars, then by app name
             this.appList.sort((a, b) => {
                 // sort by time favorited
@@ -979,37 +979,37 @@ define([
                 }
 
                 // otherwise sort by stars
-                var aStars = a.getStarCount();
-                var bStars = b.getStarCount();
+                const aStars = a.getStarCount();
+                const bStars = b.getStarCount();
                 if (aStars > bStars) return -1;
                 if (bStars > aStars) return 1;
-                var aName = a.info.name.toLowerCase();
-                var bName = b.info.name.toLowerCase();
+                const aName = a.info.name.toLowerCase();
+                const bName = b.info.name.toLowerCase();
                 if (aName < bName) return -1;
                 if (aName > bName) return 1;
                 return 0;
             });
-            var $mySection = $('<div>').addClass('catalog-section');
-            var $myDiv = $('<div>').addClass('kbcb-app-card-list-container');
+            const $mySection = $('<div>').addClass('catalog-section');
+            const $myDiv = $('<div>').addClass('kbcb-app-card-list-container');
             $mySection.append(
                 $('<div>')
-                    .css({ color: '#777' })
+                    .css({color: '#777'})
                     .append($('<h4>').append('My Favorites'))
             );
             $mySection.append($myDiv);
             this.$appListPanel.append($mySection);
 
-            var $otherSection = $('<div>').addClass('catalog-section');
-            var $otherDiv = $('<div>').addClass('kbcb-app-card-list-container');
+            const $otherSection = $('<div>').addClass('catalog-section');
+            const $otherDiv = $('<div>').addClass('kbcb-app-card-list-container');
             $otherSection.append(
                 $('<div>')
-                    .css({ color: '#777' })
+                    .css({color: '#777'})
                     .append($('<h4>').append('Everything Else'))
             );
             $otherSection.append($otherDiv);
             this.$appListPanel.append($otherSection);
-            var hasFavorites = false;
-            for (var k = 0; k < this.appList.length; k++) {
+            let hasFavorites = false;
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
                 if (this.appList[k].isStarOn()) {
                     $myDiv.append(this.appList[k].getNewCardDiv());
@@ -1021,35 +1021,35 @@ define([
             if (!hasFavorites) {
                 $myDiv.append(
                     $('<div>')
-                        .css({ color: '#777' })
+                        .css({color: '#777'})
                         .addClass('kbcb-app-card-list-element')
                         .append('You do not have any favorites yet.  Click on the stars to add to your favorites.')
                 );
             }
         },
 
-        renderByFavorites: function () {
+        renderByFavorites() {
             // sort by number of stars, then by app name
             this.appList.sort((a, b) => {
-                var aStars = a.getStarCount();
-                var bStars = b.getStarCount();
+                const aStars = a.getStarCount();
+                const bStars = b.getStarCount();
                 if (aStars > bStars) return -1;
                 if (bStars > aStars) return 1;
-                var aName = a.info.name.toLowerCase();
-                var bName = b.info.name.toLowerCase();
+                const aName = a.info.name.toLowerCase();
+                const bName = b.info.name.toLowerCase();
                 if (aName < bName) return -1;
                 if (aName > bName) return 1;
                 return 0;
             });
-            var $listContainer = $('<div>').css({ overflow: 'auto', padding: '0 0 2em 0' });
-            for (var k = 0; k < this.appList.length; k++) {
+            const $listContainer = $('<div>').css({overflow: 'auto', padding: '0 0 2em 0'});
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
                 $listContainer.append(this.appList[k].getNewCardDiv());
             }
             this.$appListPanel.append($listContainer);
         },
 
-        renderTypes: function (types, type_field) {
+        renderTypes(types, type_field) {
             // create the sections per type
             const $typeDivLookup = {};
             types.forEach((type) => {
@@ -1060,7 +1060,7 @@ define([
 
                 $section.append(
                     $('<div>')
-                        .css({ color: '#777' })
+                        .css({color: '#777'})
                         .append(
                             $('<h4>').append(
                                 this.runtime.$europaKBaseUILink(`spec/${url_prefix}/${type}`, type)
@@ -1077,7 +1077,7 @@ define([
             const $typeDiv = $('<div>').addClass('kbcb-app-card-list-container');
             $typeDivLookup.none = $typeDiv;
             $section.append(
-                $('<div>').css({ 'color': '#777' })
+                $('<div>').css({color: '#777'})
                     .append($('<h4>').append($('<span>None</span>'))));
             $section.append($typeDiv);
             this.$appListPanel.append($section);
@@ -1097,50 +1097,50 @@ define([
             });
         },
 
-        renderbyInputTypes: function () {
+        renderbyInputTypes() {
             // get and sort the type list
             const types = Object.keys(this.inputTypes).sort();
             const type_field = 'input_types';
             this.renderTypes(types, type_field);
         },
 
-        renderByOutputTypes: function () {
+        renderByOutputTypes() {
             // get and sort the type list
             const types = Object.keys(this.outputTypes).sort();
             const type_field = 'output_types';
             this.renderTypes(types, type_field);
         },
 
-        renderByRuns: function () {
+        renderByRuns() {
             this.$appListPanel.append(
                 '<div><i>Note: Run counts for legacy methods released before 2016 are not reported.</i><br><br></div>'
             );
 
             // sort by runs, then by app name
             this.appList.sort((a, b) => {
-                var aRuns = a.getRunCount();
-                var bRuns = b.getRunCount();
+                const aRuns = a.getRunCount();
+                const bRuns = b.getRunCount();
                 if (aRuns > bRuns) return -1;
                 if (bRuns > aRuns) return 1;
-                var aName = a.info.name.toLowerCase();
-                var bName = b.info.name.toLowerCase();
+                const aName = a.info.name.toLowerCase();
+                const bName = b.info.name.toLowerCase();
                 if (aName < bName) return -1;
                 if (aName > bName) return 1;
                 return 0;
             });
-            var $listContainer = $('<div>').css({ overflow: 'auto', padding: '0 0 2em 0' });
-            for (var k = 0; k < this.appList.length; k++) {
+            const $listContainer = $('<div>').css({overflow: 'auto', padding: '0 0 2em 0'});
+            for (let k = 0; k < this.appList.length; k++) {
                 this.appList[k].clearCardsAddedCount();
                 $listContainer.append(this.appList[k].getNewCardDiv());
             }
             this.$appListPanel.append($listContainer);
         },
 
-        renderAppList: function (organizeBy) {
+        renderAppList(organizeBy) {
             this.$appListPanel.children().detach();
 
             if (this.options.tag) {
-                var text_css = { color: '#777', 'font-size': '1.1em', margin: '5px' };
+                const text_css = {color: '#777', 'font-size': '1.1em', margin: '5px'};
                 if (this.options.tag === 'dev') {
                     this.$appListPanel.append(
                         $('<div>')
@@ -1191,7 +1191,7 @@ define([
             this.filterApps(this.$searchBox.val());
         },
 
-        showError: function (error) {
+        showError(error) {
             this.$errorPanel.empty();
             this.$errorPanel.append('<strong>Error when fetching App/Method information.</strong><br><br>');
             this.$errorPanel.append(error.error.message);

@@ -12,7 +12,7 @@ define([
 
     class KBaseUILink extends Component {
         render() {
-            const url = kbaseUIURL(this.props.hash, this.props.params);
+            const url = kbaseUIURL(this.props.hash, this.props.params).toString();
             return html`<a href=${url} target="_parent">
                 ${this.props.children}
             </a>`;

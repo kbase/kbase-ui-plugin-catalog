@@ -42,25 +42,14 @@ define([
             return this.config(path, defaultValue);
         }
 
-        basePath() {
-            return window.parent.location.pathname;
-        }
-
-        catalogPath(path) {
-            return `${this.basePath()}#catalog/${path}`;
-        }
-
         catalogNavigate(path) {
-            window.parent.location.href = this.catalogPath(path);
-        }
-
-        kbaseUINavigate(path) {
-            window.parent.location.href = this.$makeCatalogURL(path);
+            window.parent.location.hash = `#${path}`;
         }
 
         $catalogLink(path, label, options = {}) {
+            const url = kbaseUIURL(`catalog/${path}`).toString();
             const $link = $(document.createElement('a'))
-                .attr('href', `${this.basePath()}#catalog/${path}`)
+                .attr('href', `${url}`)
                 .attr('target', '_parent');
 
             if (options.icon) {
@@ -114,10 +103,10 @@ define([
          * @param {*} options
          * @returns A jquery object wrapping an anchor link to a kbase-ui endpoint.
          */
-        $kbaseUILink(hash, label, options={}) {
-            const url = kbaseUIURL(hash);
+        $kbaseUILink(path, label, options={}) {
+            const url = kbaseUIURL(path).toString();
             const $link = $(document.createElement('a'))
-                .attr('href', url.toString())
+                .attr('href', url)
                 .attr('target', '_parent');
 
             if (options.icon) {

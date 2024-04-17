@@ -7,5 +7,6 @@ define([
         return `/${basePath}`;
     }
 
+
     return {basePath};
 });

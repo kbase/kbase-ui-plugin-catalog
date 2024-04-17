@@ -12,7 +12,7 @@ define([
 
     class BackToCatalogLink extends Component {
         render() {
-            const url = `${this.props.runtime.basePath()}#catalog/apps`;
+            const url = this.props.runtime.kbaseUIURL('catalog/apps').toString();
             return html`<div className="BackToCatalogLink">
                 <a href=${url} target="_parent">
                     <i class="fa fa-chevron-left" /> back to the App Catalog

@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out GitHub Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       #
       # Build the plugin
@@ -21,7 +21,7 @@ jobs:
       # Add the built assets to the release
       #
       - name: Upload dist to release
-        uses: alexellis/upload-assets@0.2.2
+        uses: alexellis/upload-assets@0.4.1
         env:
           # GITHUB_TOKEN: ${{ secrets.KBASE_BOT_TOKEN }}
           GITHUB_TOKEN: ${{ github.token }}

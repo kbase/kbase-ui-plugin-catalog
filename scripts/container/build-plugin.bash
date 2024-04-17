@@ -1,7 +1,5 @@
 cd build
-npm install && \
-npm run clean && \
-npm install && \
+npm ci && \
 npm run install-bower && \
 npm run install-npm && \
 npm run remove-source-maps && \
